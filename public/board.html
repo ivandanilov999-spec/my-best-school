@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎨 Интерактивная доска</title>
+    <title>🎨 Совместная Онлайн-Доска</title>
     <style>
         body { font-family: system-ui, sans-serif; margin: 0; background: #f1f5f9; text-align: center; }
-        header { background: #4f46e5; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
-        .controls { display: flex; gap: 10px; justify-content: center; margin: 15px 0; }
+        header { background: #4f46e5; color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .controls { display: flex; gap: 10px; justify-content: center; margin: 15px 0; align-items: center; }
         canvas { background: white; border: 2px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); cursor: crosshair; touch-action: none; }
-        button, input[type="color"] { padding: 10px 15px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; }
+        button, input[type="color"] { padding: 10px 15px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; transition: 0.2s; }
         button { background: #e2e8f0; color: #1e293b; }
         button.active { background: #4f46e5; color: white; }
         .back-btn { background: rgba(255,255,255,0.2); color: white; text-decoration: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; }
@@ -17,48 +17,40 @@
 </head>
 <body>
     <header>
-        <h2 style="margin:0;">🎨 Учебная Онлайн-Доска</h2>
+        <h2 style="margin:0;">🎨 Интерактивная Облачная Доска</h2>
         <a href="/" class="back-btn">← Вернуться в школу</a>
     </header>
 
     <div class="controls">
-        <input type="color" id="colorPicker" value="#000000" title="Выбрать цвет">
-        <button id="brushBtn" class="active" onclick="setMode('brush')">✏️ Кисть</button>
+        <input type="color" id="colorPicker" value="#000000">
+        <button id="brushBtn" class="active" onclick="setMode('brush')">✏️ Рисовать</button>
         <button id="eraserBtn" onclick="setMode('eraser')">🧽 Ластик</button>
-        <button onclick="clearCanvas()" style="background:#ef4444; color:white;">🗑️ Очистить всё</button>
+        <button onclick="clearCanvas()" style="background:#ef4444; color:white;">🗑️ Очистить холст</button>
+        <div style="border-left: 2px solid #cbd5e1; height: 30px; margin: 0 10px;"></div>
+        <button onclick="saveBoard()" style="background:#10b981; color:white;">💾 Сохранить в Облако</button>
+        <button onclick="loadBoard()" style="background:#3b82f6; color:white;">🔄 Загрузить из Облака</button>
     </div>
 
-    <canvas id="paintCanvas" width="800" height="500"></canvas>
+    <canvas id="paintCanvas" width="900" height="550"></canvas>
 
     <script>
         const canvas = document.getElementById('paintCanvas');
         const ctx = canvas.getContext('2d');
         let painting = false;
         let mode = 'brush';
-        let lastColor = '#000000';
 
-        // Настройки линии
-        ctx.lineWidth = 5;
+        ctx.lineWidth = 4;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
 
-        function startPosition(e) {
-            painting = true;
-            draw(e);
-        }
-
-        function finishedPosition() {
-            painting = false;
-            ctx.beginPath();
-        }
-
+        function startPosition(e) { painting = true; draw(e); }
+        function finishedPosition() { painting = false; ctx.beginPath(); }
+        
         function draw(e) {
             if (!painting) return;
-            
-            // Поддержка мыши и тачскринов (телефонов)
             const rect = canvas.getBoundingClientRect();
-            const x = (e.clientX || e.touches[0].clientX) - rect.left;
-            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+            const x = (e.clientX || e.touches.clientX) - rect.left;
+            const y = (e.clientY || e.touches.clientY) - rect.top;
 
             ctx.lineTo(x, y);
             ctx.stroke();
@@ -70,36 +62,45 @@
             mode = newMode;
             document.getElementById('brushBtn').classList.toggle('active', mode === 'brush');
             document.getElementById('eraserBtn').classList.toggle('active', mode === 'eraser');
-            
-            if (mode === 'eraser') {
-                ctx.strokeStyle = '#ffffff';
-                ctx.lineWidth = 20;
-            } else {
-                ctx.strokeStyle = document.getElementById('colorPicker').value;
-                ctx.lineWidth = 5;
-            }
+            ctx.strokeStyle = mode === 'eraser' ? '#ffffff' : document.getElementById('colorPicker').value;
+            ctx.lineWidth = mode === 'eraser' ? 25 : 4;
         }
 
-        function clearCanvas() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
+        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
-        // Следим за изменением цвета
         document.getElementById('colorPicker').addEventListener('input', (e) => {
             if (mode === 'brush') ctx.strokeStyle = e.target.value;
         });
 
-        // Слушатели событий мыши
+        async function saveBoard() {
+            const dataURL = canvas.toDataURL();
+            await fetch('/api/board/save', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ boardData: dataURL })
+            });
+            alert('Доска успешно сохранена в облако школы!');
+        }
+
+        async function loadBoard() {
+            const res = await fetch('/api/board/load');
+            const data = await res.json();
+            if (data.image) {
+                const img = new Image();
+                img.src = data.image;
+                img.onload = () => {
+                    clearCanvas();
+                    ctx.drawImage(img, 0, 0);
+                };
+            } else { alert('В облаке пока нет сохраненных рисунков.'); }
+        }
+
         canvas.addEventListener('mousedown', startPosition);
         canvas.addEventListener('mouseup', finishedPosition);
         canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseleave', finishedPosition);
-
-        // Слушатели событий экрана телефона
         canvas.addEventListener('touchstart', startPosition);
         canvas.addEventListener('touchend', finishedPosition);
         canvas.addEventListener('touchmove', draw);
     </script>
 </body>
 </html>
-
