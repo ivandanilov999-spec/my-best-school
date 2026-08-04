@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ Цифровая Онлайн-Школа нового поколения</title>
+    <title>🚀 Моя Цифровая Академия</title>
     <style>
         :root {
             --primary: #4f46e5;
@@ -16,10 +16,7 @@
             --text-main: #1e293b;
             --text-muted: #64748b;
         }
-        body { 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            margin: 0; background: var(--background); color: var(--text-main); line-height: 1.5;
-        }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; background: var(--background); color: var(--text-main); line-height: 1.5; }
         header { 
             background: linear-gradient(135deg, var(--primary), var(--secondary)); 
             color: white; padding: 2.5rem 1.5rem; text-align: center; 
@@ -27,50 +24,39 @@
             border-bottom-left-radius: 24px; border-bottom-right-radius: 24px;
         }
         header h1 { margin: 0; font-size: 2.5rem; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        #userInfo {
-            margin-top: 10px; font-size: 1.1rem; background: rgba(255, 255, 255, 0.2);
-            display: inline-block; padding: 6px 16px; border-radius: 20px; backdrop-filter: blur(5px);
-        }
-        .container { 
-            max-width: 900px; margin: -20px auto 3rem auto; padding: 2rem; 
-            background: var(--card-bg); border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            position: relative; z-index: 10;
-        }
+        #userInfo { margin-top: 10px; font-size: 1.1rem; background: rgba(255, 255, 255, 0.2); display: inline-block; padding: 6px 16px; border-radius: 20px; backdrop-filter: blur(5px); }
+        .container { max-width: 950px; margin: -20px auto 3rem auto; padding: 2rem; background: var(--card-bg); border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); position: relative; z-index: 10; }
         .hidden { display: none !important; }
-        h2 { color: var(--primary); font-weight: 700; margin-top: 0; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; }
+        h2, h3 { color: var(--primary); font-weight: 700; margin-top: 0; padding-bottom: 10px; border-bottom: 2px solid #f1f5f9; }
         .form-group { margin-bottom: 1.25rem; }
-        label { font-weight: 600; color: var(--text-main); display: block; margin-bottom: 5px; }
-        input, select, textarea { 
-            width: 100%; padding: 12px 16px; margin-top: 5px; box-sizing: border-box; 
-            border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1rem;
-            transition: all 0.3s ease; background: #f8fafc;
-        }
+        label { font-weight: 600; display: block; margin-bottom: 5px; }
+        input, select, textarea { width: 100%; padding: 12px 16px; margin-top: 5px; box-sizing: border-box; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1rem; transition: all 0.3s ease; background: #f8fafc; }
         input:focus, select:focus, textarea:focus { border-color: var(--primary); outline: none; background: #ffffff; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
-        textarea { height: 120px; resize: vertical; }
-        button { 
-            background: linear-gradient(135deg, var(--primary), #6366f1); color: white; border: none; 
-            padding: 14px 20px; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 1rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
-        }
+        textarea { height: 100px; resize: vertical; }
+        button { background: linear-gradient(135deg, var(--primary), #6366f1); color: white; border: none; padding: 14px 20px; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2); }
         button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3); background: var(--primary-hover); }
         .btn-success { background: linear-gradient(135deg, var(--success), #34d399); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
-        .btn-success:hover { background: #059669; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3); }
-        .logout-btn { background: linear-gradient(135deg, var(--danger), #f87171); margin-top: 2rem; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2); }
-        .logout-btn:hover { background: #dc2626; box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3); }
-        .card { border: 1px solid #f1f5f9; padding: 20px; margin-bottom: 20px; border-radius: 16px; background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: transform 0.3s ease; }
-        .card:hover { transform: scale(1.01); box-shadow: 0 10px 25px rgba(0,0,0,0.06); }
-        .card h3 { margin-top: 0; color: var(--primary); font-size: 1.3rem; }
+        .btn-success:hover { background: #059669; }
+        .logout-btn { background: linear-gradient(135deg, var(--danger), #f87171); margin-top: 2rem; }
+        .card { border: 1px solid #f1f5f9; padding: 20px; margin-bottom: 20px; border-radius: 16px; background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } .container { margin: 10px; padding: 1rem; } }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
         .admin-box { background: #f1f5f9; border-radius: 12px; padding: 12px; margin-bottom: 10px; border-left: 4px solid var(--primary); }
+        /* Стили для встроенного видео и чата */
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 12px; margin: 15px 0; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .chat-box { background: #f8fafc; border-radius: 12px; padding: 15px; margin-top: 15px; max-height: 200px; overflow-y: auto; border: 1px solid #e2e8f0; }
+        .comment-item { background: white; padding: 8px 12px; border-radius: 8px; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
     </style>
 </head>
 <body>
+
     <header>
-        <h1>🎓 ЦИФРОВАЯ ШКОЛА</h1>
-        <div id="userInfo">Добро пожаловать в будущее образования</div>
+        <h1>🎓 ЦИФРОВАЯ АКАДЕМИЯ</h1>
+        <div id="userInfo">Вход в систему образования</div>
     </header>
 
+    <!-- ЭКРАН ВХОДА И РЕГИСТРАЦИИ -->
     <div id="authScreen" class="container">
         <div class="grid">
             <div style="border-right: 2px solid #f1f5f9; padding-right: 20px;">
@@ -81,62 +67,75 @@
             </div>
             <div>
                 <h2>📝 Стать учеником</h2>
-                <input type="text" id="regName" placeholder="Полное имя ученика">
+                <input type="text" id="regName" placeholder="Имя и фамилия">
                 <input type="email" id="regEmail" placeholder="Электронная почта">
                 <input type="password" id="regPassword" placeholder="Придумайте пароль">
                 <select id="regClass">
-                    <option value="5">Выбрать класс: 5 класс</option>
-                    <option value="9">Выбрать класс: 9 класс</option>
-                    <option value="11">Выбрать класс: 11 класс</option>
+                    <option value="5">5 класс</option>
+                    <option value="9">9 класс</option>
+                    <option value="11">11 класс</option>
                 </select>
                 <button onclick="register()" class="btn-success" style="margin-top:15px; width: 100%;">Создать аккаунт ✨</button>
             </div>
         </div>
     </div>
 
+    <!-- ЭКРАН УЧЕНИКА -->
     <div id="studentScreen" class="container hidden">
-        <h2>📚 Ваша интерактивная папка с уроками</h2>
-        <div id="materialsContainer">Загрузка материалов...</div>
-        <hr style="border: 0; height: 1px; background: #e2e8f0; margin: 2rem 0;">
-        <h2>📅 Запись на живой урок к преподавателю</h2>
-        <div class="card" style="background: linear-gradient(to right, #ffffff, #f0fdf4);">
-            <div class="form-group">
-                <label>👨‍🏫 Выберите Вашего наставника:</label>
-                <select id="teacherSelect">
-                    <option value="Иванов И.И. (Профильная Математика)">Иванов И.И. (Математика)</option>
-                    <option value="Петрова А.С. (Квантовая Физика)">Петрова А.С. (Физика)</option>
-                </select>
+        <div class="grid">
+            <div>
+                <h2>📚 Ваши интерактивные уроки</h2>
+                <div id="materialsContainer">Загрузка уроков...</div>
             </div>
-            <div class="form-group">
-                <label>⏰ Выберите свободное окно времени:</label>
-                <select id="timeSelect">
-                    <option value="Понедельник, 15:00">Понедельник, 15:00</option>
-                    <option value="Среда, 16:30">Среда, 16:30</option>
-                </select>
+            <div>
+                <h2>📊 Ваш электронный журнал</h2>
+                <div id="studentGrades" class="card">У вас пока нет оценок.</div>
+                
+                <h2>📅 Запись к учителю</h2>
+                <div class="card" style="background: #f0fdf4;">
+                    <select id="teacherSelect">
+                        <option value="Иванов И.И. (Математика)">Иванов И.И. (Математика)</option>
+                        <option value="Петрова А.С. (Физика)">Петрова А.С. (Физика)</option>
+                    </select>
+                    <select id="timeSelect" style="margin-top:10px;">
+                        <option value="Понедельник, 15:00">Понедельник, 15:00</option>
+                        <option value="Среда, 16:30">Среда, 16:30</option>
+                    </select>
+                    <button onclick="bookLesson()" class="btn-success" style="width:100%; margin-top:15px;">⚡ Записаться</button>
+                </div>
             </div>
-            <button onclick="bookLesson()" class="btn-success" style="width:100%;">⚡ Забронировать место на уроке</button>
         </div>
         <button class="logout-btn" onclick="logout()">🏃 Выйти из системы</button>
     </div>
 
+    <!-- ПАНЕЛЬ АДМИНИСТРАТОРА (УЧИТЕЛЯ) -->
     <div id="adminScreen" class="container hidden">
-        <h2>👑 Панель управления обучением и контентом</h2>
-        <div class="card" style="background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 1px solid #bfdbfe;">
-            <h3 style="color: #1e40af;">➕ Создать и опубликовать новый урок</h3>
-            <select id="matClass">
-                <option value="5">Открыть доступ для: 5 класса</option>
-                <option value="9">Открыть доступ для: 9 класса</option>
-                <option value="11">Открыть доступ для: 11 класса</option>
-            </select>
-            <input type="text" id="matTitle" placeholder="Тема лекции">
-            <textarea id="matContent" placeholder="Напишите текст урока, ссылки на видео..."></textarea>
-            <button onclick="uploadMaterial()" style="width: 100%; margin-top: 10px;">🚀 Опубликовать урок на сайте</button>
+        <h2>👑 Панель Управления и Классный Журнал</h2>
+        <div class="card" style="background: #eff6ff;">
+            <h3>➕ Опубликовать масштабный урок</h3>
+            <div class="grid">
+                <div>
+                    <select id="matClass"><option value="5">5 класс</option><option value="9">9 класс</option><option value="11">11 класс</option></select>
+                    <input type="text" id="matTitle" placeholder="Название темы урока">
+                    <textarea id="matContent" placeholder="Текст лекции и теория..."></textarea>
+                </div>
+                <div>
+                    <input type="text" id="matVideo" placeholder="Ссылка на видео с YouTube">
+                    <input type="text" id="matQuestion" placeholder="Вопрос проверочного теста">
+                    <input type="text" id="matAnswer" placeholder="Правильный ответ на тест">
+                </div>
+            </div>
+            <button onclick="uploadMaterial()" style="width: 100%; margin-top: 15px;">🚀 Запустить интерактивный урок</button>
         </div>
         <div class="grid" style="margin-top: 2rem;">
-            <div><h3>👥 Зарегистрированные ученики</h3><div id="adminStudents"></div></div>
-            <div><h3>📆 Очередь на консультации (Уроки)</h3><div id="adminApps"></div></div>
+            <div><h3>👥 База учеников</h3><div id="adminStudents"></div></div>
+            <div><h3>📆 Записи на уроки</h3><div id="adminApps"></div></div>
         </div>
-        <button class="logout-btn" onclick="logout()">🔒 Выйти из режима администратора</button>
+        <div class="card" style="margin-top:20px;">
+            <h3>📊 Журнал оценок всей школы</h3>
+            <div id="adminGradesList">Оценок пока нет.</div>
+        </div>
+        <button class="logout-btn" onclick="logout()">🔒 Закрыть панель</button>
     </div>
     <script>
         let currentUser = null;
@@ -178,40 +177,140 @@
 
         async function showStudent() {
             document.getElementById('studentScreen').classList.remove('hidden');
-            document.getElementById('userInfo').innerText = `✨ Ученик: ${currentUser.name} | Класс обучения: ${currentUser.class}`;
-            
+            document.getElementById('userInfo').innerText = `✨ Ученик: ${currentUser.name} | Класс: ${currentUser.class}`;
+            loadStudentMaterials();
+            loadStudentGrades();
+        }
+
+        async function loadStudentMaterials() {
             const res = await fetch(`/api/materials/${currentUser.class}`);
             const materials = await res.json();
-            
             const container = document.getElementById('materialsContainer');
-            if(materials.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-muted); font-style: italic;">Преподаватели еще не загрузили новые лекции для вашего класса.</p>';
-            } else {
-                container.innerHTML = materials.map(m => `
+            
+            if (materials.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-muted); font-style: italic;">Уроков пока нет.</p>';
+                return;
+            }
+
+            container.innerHTML = materials.map(m => {
+                // Превращаем обычную ссылку YouTube в код для встраивания iframe
+                let videoHTML = '';
+                if (m.videoUrl) {
+                    let videoId = m.videoUrl.split('v=')[1] || m.videoUrl.split('/').pop();
+                    if (videoId.includes('&')) videoId = videoId.split('&')[0];
+                    videoHTML = `<div class="video-container"><iframe src="https://youtube.com{videoId}" allowfullscreen></iframe></div>`;
+                }
+
+                // Блок проверочного теста
+                let testHTML = '';
+                if (m.testQuestion) {
+                    testHTML = `
+                        <div class="card" style="background: #f8fafc; border: 1px dashed var(--primary); margin-top:15px;">
+                            <h4>📝 Проверка знаний</h4>
+                            <p><b>Вопрос:</b> ${m.testQuestion}</p>
+                            <input type="text" id="ans-${m.id}" placeholder="Введите ваш ответ...">
+                            <button onclick="checkTest('${m.id}', '${m.title}', '${m.testAnswer}')" style="margin-top:10px; width:auto; padding:8px 15px;">Проверить ответ</button>
+                        </div>
+                    `;
+                }
+
+                return `
                     <div class="card">
                         <h3>📘 ${m.title}</h3>
-                        <p style="white-space: pre-line; color: #334155;">${m.content}</p>
+                        <p style="white-space: pre-line;">${m.content}</p>
+                        ${videoHTML}
+                        ${testHTML}
+                        
+                        <!-- ЧАТ К УРОКУ -->
+                        <div style="margin-top:20px;">
+                            <h4>💬 Вопросы преподавателю</h4>
+                            <div class="chat-box" id="chat-${m.id}">Загрузка чата...</div>
+                            <div style="display:flex; gap:10px; margin-top:10px;">
+                                <input type="text" id="msg-${m.id}" placeholder="Задать вопрос по уроку...">
+                                <button onclick="sendComment('${m.id}')" style="width:auto; padding:10px 20px;">Отправить</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Запускаем загрузку комментариев для каждого урока
+            materials.forEach(m => loadComments(m.id));
+        }
+
+        async function checkTest(lessonId, lessonTitle, correctAnswer) {
+            const userAnswer = document.getElementById(`ans-${lessonId}`).value.trim();
+            if (!userAnswer) return alert('Введите ответ!');
+
+            let isCorrect = userAnswer.toLowerCase() === correctAnswer.toLowerCase();
+            let score = isCorrect ? 'Отлично (5/5)' : 'Неверно (Перечитайте теорию)';
+            alert(`Ваш результат: ${score}`);
+
+            if (isCorrect) {
+                await fetch('/api/grades/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ studentEmail: currentUser.email, lessonTitle, score: '5' })
+                });
+                loadStudentGrades();
+            }
+        }
+
+        async function loadStudentGrades() {
+            const res = await fetch(`/api/grades/${currentUser.email}`);
+            const grades = await res.json();
+            const container = document.getElementById('studentGrades');
+            if (grades.length === 0) {
+                container.innerHTML = '<p>Оценок пока нет. Пройдите тесты в уроках!</p>';
+            } else {
+                container.innerHTML = '<ul>' + grades.map(g => `<li>${g.date} - ${g.lessonTitle}: <b>Оценка: ${g.score}</b></li>`).join('') + '</ul>';
+            }
+        }
+
+        async function loadComments(lessonId) {
+            const res = await fetch(`/api/comments/${lessonId}`);
+            const comments = await res.json();
+            const box = document.getElementById(`chat-${lessonId}`);
+            if (comments.length === 0) {
+                box.innerHTML = '<p style="color:var(--text-muted); font-style:italic; margin:0;">Вопросов пока нет. Будьте первым!</p>';
+            } else {
+                box.innerHTML = comments.map(c => `
+                    <div class="comment-item">
+                        <small style="color:var(--primary); font-weight:bold;">${c.userName}</small> <small style="color:var(--text-muted); float:right;">${c.date}</small>
+                        <div style="margin-top:3px;">${c.text}</div>
                     </div>
                 `).join('');
             }
         }
 
+        async function sendComment(lessonId) {
+            const input = document.getElementById(`msg-${lessonId}`);
+            const text = input.value.trim();
+            if (!text) return;
+
+            await fetch('/api/comments/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ lessonId, userName: currentUser.name, text })
+            });
+            input.value = '';
+            loadComments(lessonId);
+        }
+
         async function bookLesson() {
             const teacherName = document.getElementById('teacherSelect').value;
             const lessonTime = document.getElementById('timeSelect').value;
-
-            const res = await fetch('/api/appointments/book', {
+            await fetch('/api/appointments/book', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ studentEmail: currentUser.email, teacherName, lessonTime })
             });
-            const data = await res.json();
-            alert(data.message);
+            alert('Вы успешно записались на урок к преподавателю!');
         }
 
         async function showAdmin() {
             document.getElementById('adminScreen').classList.remove('hidden');
-            document.getElementById('userInfo').innerText = `👑 Режим: Главный Администратор`;
+            document.getElementById('userInfo').innerText = `👑 Режим: Главный Администратор / Директор`;
             loadAdminDashboard();
         }
 
@@ -220,40 +319,50 @@
             const data = await res.json();
 
             document.getElementById('adminStudents').innerHTML = data.students.map(s => `
-                <div class="admin-box">
-                    <strong>👨‍🎓 ${s.name}</strong> <br>
-                    <small style="color: var(--text-muted);">${s.class} класс | ${s.email}</small>
-                </div>
-            `).join('') || '<p style="color: var(--text-muted);">Учеников нет</p>';
+                <div class="admin-box"><strong>👨‍🎓 ${s.name}</strong><br><small>${s.class} класс | ${s.email}</small></div>
+            `).join('') || '<p>Учеников нет</p>';
 
             document.getElementById('adminApps').innerHTML = data.appointments.map(a => `
-                <div class="admin-box" style="border-left-color: var(--success); background: #f0fdf4;">
-                    <strong>👤 Ученик:</strong> ${a.student_name}<br>
-                    <strong>👨‍🏫 К кому:</strong> ${a.teacher_name}<br>
-                    <strong>⏰ Время:</strong> <span style="color: var(--success); font-weight:600;">${a.lesson_time}</span>
+                <div class="admin-box" style="border-left-color: var(--success); background:#f0fdf4;">
+                    <b>Ученик:</b> ${a.student_name}<br><b>Учитель:</b> ${a.teacher_name}<br><b>Время:</b> ${a.lesson_time}
                 </div>
-            `).join('') || '<p style="color: var(--text-muted);">Записей нет</p>';
+            `).join('') || '<p>Засей нет</p>';
+
+            document.getElementById('adminGradesList').innerHTML = data.grades.map(g => `
+                <div style="padding:8px; border-bottom:1px solid #f1f5f9;">🗓 ${g.date} — <b>${g.student_name}</b> за урок "${g.lesson_title}" получил оценку: <b style="color:var(--success);">${g.score}</b></div>
+            `).join('') || '<p>Журнал пуст</p>';
         }
 
         async function uploadMaterial() {
             const schoolClass = document.getElementById('matClass').value;
             const title = document.getElementById('matTitle').value;
             const content = document.getElementById('matContent').value;
+            const videoUrl = document.getElementById('matVideo').value;
+            const testQuestion = document.getElementById('matQuestion').value;
+            const testAnswer = document.getElementById('matAnswer').value;
 
             const res = await fetch('/api/admin/upload', {
                 method: 'POST',
+                            const res = await fetch('/api/admin/upload', {
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ schoolClass, title, content })
+                body: JSON.stringify({ schoolClass, title, content, videoUrl, testQuestion, testAnswer })
             });
             const data = await res.json();
             alert(data.message);
-            
-            document.getElementById('matTitle').value = '';
+
+            // Очистка полей формы
+            document.getElementById('matTitle').value = ''; 
             document.getElementById('matContent').value = '';
+            document.getElementById('matVideo').value = ''; 
+            document.getElementById('matQuestion').value = '';
+            document.getElementById('matAnswer').value = '';
             loadAdminDashboard();
         }
 
-        function logout() { location.reload(); }
+        function logout() { 
+            location.reload(); 
+        }
     </script>
 </body>
 </html>
