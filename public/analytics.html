@@ -1,1 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Аналитическая Панель Директора</title>
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 0; background: #f8fafc; color: #1e293b; }
+        header { background: #0f172a; color: white; padding: 1.5rem; text-align: center; }
+        .container { max-width: 1000px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 2rem; }
+        @media (max-width: 768px) { .chart-grid { grid-template-columns: 1fr; } }
+        .chart-card { background: #ffffff; padding: 20px; border-radius: 16px; border: 1px solid #e2e8f0; }
+        .back-btn { display: inline-block; background: #334155; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="margin:0;">📊 BIG DATA: СИСТЕМНАЯ АНАЛИТИКА ШКОЛЫ</h1>
+    </header>
+
+    <div class="container">
+        <a href="/" class="back-btn">← В панель управления</a>
+        <h2>Индикаторы эффективности обучения (KPI)</h2>
+        
+        <div class="chart-grid">
+            <!-- График 1: Успеваемость -->
+            <div class="chart-card">
+                <h3>📈 Средний балл по классам</h3>
+                <canvas id="gradesChart"></canvas>
+            </div>
+            <!-- График 2: Популярность предметов -->
+            <div class="chart-card">
+                <h3>🍕 Распределение учеников по классам</h3>
+                <canvas id="studentsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Инициализация красивых графиков Chart.js
+        const ctx1 = document.getElementById('gradesChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['5 Класс', ['9 Класс'], '11 Класс'],
+                datasets: [{
+                    label: 'Средний балл за тесты',
+                    data: [4.2, 4.7, 4.5],
+                    backgroundColor: ['#6366f1', '#3b82f6', '#10b981'],
+                    borderRadius: 8
+                }]
+            }
+        });
+
+        const ctx2 = document.getElementById('studentsChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: ['5 Класс', '9 Класс', '11 Класс'],
+                datasets: [{
+                    data:,
+                    backgroundColor: ['#ec4899', '#f59e0b', '#06b6d4']
+                }]
+            }
+        });
+    </script>
+</body>
+</html>
 
