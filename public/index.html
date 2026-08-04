@@ -42,7 +42,6 @@
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
         .admin-box { background: #f1f5f9; border-radius: 12px; padding: 12px; margin-bottom: 10px; border-left: 4px solid var(--primary); }
-        /* Стили для встроенного видео и чата */
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 12px; margin: 15px 0; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
         .chat-box { background: #f8fafc; border-radius: 12px; padding: 15px; margin-top: 15px; max-height: 200px; overflow-y: auto; border: 1px solid #e2e8f0; }
@@ -137,8 +136,8 @@
         </div>
         <button class="logout-btn" onclick="logout()">🔒 Закрыть панель</button>
     </div>
-    <script>
-        let currentUser = null;
+
+    <script>         let currentUser = null;
 
         async function login() {
             const email = document.getElementById('loginEmail').value;
@@ -193,7 +192,6 @@
             }
 
             container.innerHTML = materials.map(m => {
-                // Превращаем обычную ссылку YouTube в код для встраивания iframe
                 let videoHTML = '';
                 if (m.videoUrl) {
                     let videoId = m.videoUrl.split('v=')[1] || m.videoUrl.split('/').pop();
@@ -201,7 +199,6 @@
                     videoHTML = `<div class="video-container"><iframe src="https://youtube.com{videoId}" allowfullscreen></iframe></div>`;
                 }
 
-                // Блок проверочного теста
                 let testHTML = '';
                 if (m.testQuestion) {
                     testHTML = `
@@ -221,7 +218,6 @@
                         ${videoHTML}
                         ${testHTML}
                         
-                        <!-- ЧАТ К УРОКУ -->
                         <div style="margin-top:20px;">
                             <h4>💬 Вопросы преподавателю</h4>
                             <div class="chat-box" id="chat-${m.id}">Загрузка чата...</div>
@@ -234,7 +230,6 @@
                 `;
             }).join('');
 
-            // Запускаем загрузку комментариев для каждого урока
             materials.forEach(m => loadComments(m.id));
         }
 
@@ -271,6 +266,7 @@
             const res = await fetch(`/api/comments/${lessonId}`);
             const comments = await res.json();
             const box = document.getElementById(`chat-${lessonId}`);
+            if (!box) return;
             if (comments.length === 0) {
                 box.innerHTML = '<p style="color:var(--text-muted); font-style:italic; margin:0;">Вопросов пока нет. Будьте первым!</p>';
             } else {
@@ -326,7 +322,7 @@
                 <div class="admin-box" style="border-left-color: var(--success); background:#f0fdf4;">
                     <b>Ученик:</b> ${a.student_name}<br><b>Учитель:</b> ${a.teacher_name}<br><b>Время:</b> ${a.lesson_time}
                 </div>
-            `).join('') || '<p>Засей нет</p>';
+            `).join('') || '<p>Записей нет</p>';
 
             document.getElementById('adminGradesList').innerHTML = data.grades.map(g => `
                 <div style="padding:8px; border-bottom:1px solid #f1f5f9;">🗓 ${g.date} — <b>${g.student_name}</b> за урок "${g.lesson_title}" получил оценку: <b style="color:var(--success);">${g.score}</b></div>
@@ -343,7 +339,33 @@
 
             const res = await fetch('/api/admin/upload', {
                 method: 'POST',
-                            const res = await fetch('/api/admin/upload', {
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ schoolClass, title, content, videoUrl, testQuestion, testAnswer })
+            });
+udents').innerHTML = data.students.map(s => `
+                <div class="admin-box"><strong>👨‍🎓 ${s.name}</strong><br><small>${s.class} класс | ${s.email}</small></div>
+            `).join('') || '<p>Учеников нет</p>';
+
+            document.getElementById('adminApps').innerHTML = data.appointments.map(a => `
+                <div class="admin-box" style="border-left-color: var(--success); background:#f0fdf4;">
+                    <b>Ученик:</b> ${a.student_name}<br><b>Учитель:</b> ${a.teacher_name}<br><b>Время:</b> ${a.lesson_time}
+                </div>
+            `).join('') || '<p>Записей нет</p>';
+
+            document.getElementById('adminGradesList').innerHTML = data.grades.map(g => `
+                <div style="padding:8px; border-bottom:1px solid #f1f5f9;">🗓 ${g.date} — <b>${g.student_name}</b> за урок "${g.lesson_title}" получил оценку: <b style="color:var(--success);">${g.score}</b></div>
+            `).join('') || '<p>Журнал пуст</p>';
+        }
+
+        async function uploadMaterial() {
+            const schoolClass = document.getElementById('matClass').value;
+            const title = document.getElementById('matTitle').value;
+            const content = document.getElementById('matContent').value;
+            const videoUrl = document.getElementById('matVideo').value;
+            const testQuestion = document.getElementById('matQuestion').value;
+            const testAnswer = document.getElementById('matAnswer').value;
+
+            const res = await fetch('/api/admin/upload', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ schoolClass, title, content, videoUrl, testQuestion, testAnswer })
@@ -351,7 +373,6 @@
             const data = await res.json();
             alert(data.message);
 
-            // Очистка полей формы
             document.getElementById('matTitle').value = ''; 
             document.getElementById('matContent').value = '';
             document.getElementById('matVideo').value = ''; 
@@ -360,10 +381,9 @@
             loadAdminDashboard();
         }
 
-        function logout() { 
-            location.reload(); 
-        }
+        function logout() { location.reload(); }
     </script>
 </body>
 </html>
+
 
