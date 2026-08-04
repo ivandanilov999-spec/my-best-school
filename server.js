@@ -1,107 +1,100 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const sqlite3 = require('sqlite3').verbose();
+const fs = require('fs');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-// Подключение к файлу базы данных SQLite
-const db = new sqlite3.Database('./school.db', (err) => {
-    if (err) console.error('Ошибка подключения к БД:', err.message);
-    else console.log('База данных успешно подключена.');
-});
+// Функции для работы с файлами-базами данных
+const readData = (filename, defaultData = []) => {
+    try {
+        if (!fs.existsSync(filename)) return defaultData;
+        const content = fs.readFileSync(filename, 'utf8');
+        return JSON.parse(content);
+    } catch (e) {
+        return defaultData;
+    }
+};
 
-// Создание таблиц при первом запуске
-db.serialize(() => {
-    db.run(`CREATE TABLE IF NOT EXISTS users (
-        email TEXT PRIMARY KEY,
-        password TEXT,
-        name TEXT,
-        role TEXT,
-        class TEXT
-    )`);
+const writeData = (filename, data) => {
+    fs.writeFileSync(filename, JSON.stringify(data, null, 2), 'utf8');
+};
 
-    db.run(`CREATE TABLE IF NOT EXISTS materials (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        class TEXT,
-        title TEXT,
-        content TEXT
-    )`);
-
-    db.run(`CREATE TABLE IF NOT EXISTS appointments (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        student_email TEXT,
-        teacher_name TEXT,
-        lesson_time TEXT
-    )`);
-
-    // Создаем тестового админа, если его нет
-    db.run(`INSERT OR IGNORE INTO users (email, password, name, role, class) 
-            VALUES ('admin@school.com', 'admin777', 'Директор', 'admin', 'all')`);
-});
+// Инициализация дефолтного админа
+let users = readData('users.json', {});
+if (!users['admin@school.com']) {
+    users['admin@school.com'] = { password: 'admin777', name: 'Директор', role: 'admin', class: 'all' };
+    writeData('users.json', users);
+}
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Авторизация (Исправлено!)
+// Авторизация
 app.post('/api/login', (req, res) => {
     const { email, password } = req.body;
-    db.get(`SELECT * FROM users WHERE email = ? AND password = ?`, [email, password], (err, user) => {
-        if (err || !user) {
-            return res.status(400).json({ success: false, message: 'Неверный email или пароль' });
-        }
-        res.json({ success: true, role: user.role, user });
-    });
+    users = readData('users.json', {});
+    const user = users[email];
+    if (!user || user.password !== password) {
+        return res.status(400).json({ success: false, message: 'Неверный email или пароль' });
+    }
+    res.json({ success: true, role: user.role, user: { email, name: user.name, class: user.class } });
 });
 
 // Регистрация ученика
 app.post('/api/register', (req, res) => {
     const { email, password, name, schoolClass } = req.body;
-    db.run(`INSERT INTO users (email, password, name, role, class) VALUES (?, ?, ?, 'student', ?)`,
-        [email, password, name, schoolClass], (err) => {
-            if (err) return res.status(400).json({ success: false, message: 'Этот Email уже занят' });
-            res.json({ success: true, message: 'Ученик успешно зарегистрирован!' });
-        });
+    users = readData('users.json', {});
+    if (users[email]) {
+        return res.status(400).json({ success: false, message: 'Этот Email уже занят' });
+    }
+    users[email] = { password, name, role: 'student', class: schoolClass };
+    writeData('users.json', users);
+    res.json({ success: true, message: 'Ученик успешно зарегистрирован!' });
 });
 
 // АДМИН: Загрузка нового материала
 app.post('/api/admin/upload', (req, res) => {
     const { schoolClass, title, content } = req.body;
-    db.run(`INSERT INTO materials (class, title, content) VALUES (?, ?, ?)`, [schoolClass, title, content], (err) => {
-        if (err) return res.status(500).json({ success: false });
-        res.json({ success: true, message: 'Материал успешно загружен для учеников!' });
-    });
+    const materials = readData('materials.json');
+    materials.push({ class: schoolClass, title, content });
+    writeData('materials.json', materials);
+    res.json({ success: true, message: 'Материал успешно загружен для учеников!' });
 });
 
 // Получение материалов для конкретного класса
 app.get('/api/materials/:class', (req, res) => {
-    db.all(`SELECT * FROM materials WHERE class = ?`, [req.params.class], (err, rows) => {
-        res.json(rows || []);
-    });
+    const materials = readData('materials.json');
+    const filtered = materials.filter(m => m.class === req.params.class);
+    res.json(filtered);
 });
 
 // Запись на урок к преподавателю
 app.post('/api/appointments/book', (req, res) => {
     const { studentEmail, teacherName, lessonTime } = req.body;
-    db.run(`INSERT INTO appointments (student_email, teacher_name, lesson_time) VALUES (?, ?, ?)`,
-        [studentEmail, teacherName, lessonTime], (err) => {
-            if (err) return res.status(500).json({ success: false });
-            res.json({ success: true, message: 'Вы успешно записались на урок!' });
-        });
+    const appointments = readData('appointments.json');
+    appointments.push({ student_email: studentEmail, teacher_name: teacherName, lesson_time: lessonTime });
+    writeData('appointments.json', appointments);
+    res.json({ success: true, message: 'Вы успешно записались на урок!' });
 });
 
 // АДМИН: Посмотреть всех учеников и все записи
 app.get('/api/admin/dashboard', (req, res) => {
-    db.all(`SELECT email, name, class FROM users WHERE role = 'student'`, [], (err, students) => {
-        db.all(`SELECT appointments.*, users.name as student_name FROM appointments 
-                JOIN users ON appointments.student_email = users.email`, [], (err, apps) => {
-            res.json({ students: students || [], appointments: apps || [] });
-        });
+    users = readData('users.json', {});
+    const appointments = readData('appointments.json');
+    
+    const studentsList = Object.keys(users)
+        .filter(email => users[email].role === 'student')
+        .map(email => ({ email, name: users[email].name, class: users[email].class }));
+
+    const appsList = appointments.map(a => {
+        const student = users[a.student_email] || { name: 'Удаленный ученик' };
+        return { student_name: student.name, teacher_name: a.teacher_name, lesson_time: a.lesson_time };
     });
+
+    res.json({ students: studentsList, appointments: appsList });
 });
 
-app.listen(PORT, () => console.log(`Полноценная школа запущена на http://localhost:${PORT}`));
-
-
+app.listen(PORT, () => console.log(`Полноценная школа запущена в облаке!`));
 
