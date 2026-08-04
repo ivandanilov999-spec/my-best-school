@@ -3,63 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 Моя Цифровая Академия</title>
+    <title>🎓 Супер Академия LMS</title>
     <style>
-        :root { --primary: #4f46e5; --primary-hover: #4338ca; --secondary: #06b6d4; --success: #10b981; --danger: #ef4444; --background: #f8fafc; --card-bg: #ffffff; --text-main: #1e293b; --text-muted: #64748b; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; background: var(--background); color: var(--text-main); line-height: 1.5; }
-        header { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 2.5rem 1.5rem; text-align: center; box-shadow: 0 4px 20px rgba(79, 70, 229, 0.15); border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; }
-        header h1 { margin: 0; font-size: 2.5rem; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        #userInfo { margin-top: 10px; font-size: 1.1rem; background: rgba(255, 255, 255, 0.2); display: inline-block; padding: 6px 16px; border-radius: 20px; backdrop-filter: blur(5px); }
-        .container { max-width: 950px; margin: -20px auto 3rem auto; padding: 2rem; background: var(--card-bg); border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); position: relative; z-index: 10; }
+        :root { --primary: #4f46e5; --success: #10b981; --warning: #f59e0b; --danger: #ef4444; --background: #f8fafc; }
+        body { font-family: system-ui, sans-serif; margin: 0; background: var(--background); color: #1e293b; line-height: 1.5; }
+        header { background: linear-gradient(135deg, var(--primary), #06b6d4); color: white; padding: 2rem; text-align: center; position: relative; }
+        .coin-badge { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; font-weight: bold; backdrop-filter: blur(5px); }
+        .container { max-width: 1000px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
         .hidden { display: none !important; }
-        h2, h3 { color: var(--primary); font-weight: 700; margin-top: 0; padding-bottom: 10px; border-bottom: 2px solid #f1f5f9; }
-        .form-group { margin-bottom: 1.25rem; }
-        label { font-weight: 600; display: block; margin-bottom: 5px; }
-        input, select, textarea { width: 100%; padding: 12px 16px; margin-top: 5px; box-sizing: border-box; border: 2px solid #e2e8f0; border-radius: 12px; font-size: 1rem; transition: all 0.3s ease; background: #f8fafc; }
-        input:focus, select:focus, textarea:focus { border-color: var(--primary); outline: none; background: #ffffff; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
-        textarea { height: 100px; resize: vertical; }
-        button { background: linear-gradient(135deg, var(--primary), #6366f1); color: white; border: none; padding: 14px 20px; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2); }
-        button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(79, 70, 229, 0.3); background: var(--primary-hover); }
-        .btn-success { background: linear-gradient(135deg, var(--success), #34d399); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        input, select, textarea, button { width: 100%; padding: 12px; margin-top: 8px; box-sizing: border-box; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 1rem; }
+        button { background: var(--primary); color: white; font-weight: bold; cursor: pointer; border: none; transition: 0.2s; }
+        button:hover { background: #4338ca; }
+        .btn-success { background: var(--success); }
         .btn-success:hover { background: #059669; }
-        .logout-btn { background: linear-gradient(135deg, var(--danger), #f87171); margin-top: 2rem; }
-        .card { border: 1px solid #f1f5f9; padding: 20px; margin-bottom: 20px; border-radius: 16px; background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
-        .admin-box { background: #f1f5f9; border-radius: 12px; padding: 12px; margin-bottom: 10px; border-left: 4px solid var(--primary); }
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 12px; margin: 15px 0; }
+        .btn-warning { background: var(--warning); }
+        .card { border: 1px solid #e2e8f0; padding: 15px; margin-bottom: 15px; border-radius: 12px; background: white; }
+        .admin-box { background: #f1f5f9; padding: 10px; margin-bottom: 8px; border-radius: 8px; border-left: 4px solid var(--primary); }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin: 10px 0; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        .chat-box { background: #f8fafc; border-radius: 12px; padding: 15px; margin-top: 15px; max-height: 200px; overflow-y: auto; border: 1px solid #e2e8f0; }
-        .comment-item { background: white; padding: 8px 12px; border-radius: 8px; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .chat-box { background: #f8fafc; border-radius: 8px; padding: 10px; max-height: 150px; overflow-y: auto; border: 1px solid #e2e8f0; margin-top: 10px; }
+        .comment-item { background: white; padding: 6px; border-radius: 6px; margin-bottom: 6px; font-size: 0.9rem; }
     </style>
 </head>
 <body>
     <header>
-        <h1>🎓 ЦИФРОВАЯ АКАДЕМИЯ</h1>
-        <div id="userInfo">Вход в систему образования</div>
+        <h1 style="margin:0;">🎓 СУПЕР АКАДЕМИЯ LMS</h1>
+        <div id="userInfo" style="margin-top:10px;">Добро пожаловать</div>
+        <div id="coinBalance" class="coin-badge hidden">🪙 Монеты: <span id="userCoins">0</span></div>
     </header>
 
-    <!-- АВТОРИЗАЦИЯ -->
+    <!-- ЭКРАН ВХОДА И РЕГИСТРАЦИИ -->
     <div id="authScreen" class="container">
         <div class="grid">
-            <div style="border-right: 2px solid #f1f5f9; padding-right: 20px;">
+            <div style="border-right: 1px solid #e2e8f0; padding-right: 20px;">
                 <h2>🔐 Вход в кабинет</h2>
-                <input type="email" id="loginEmail" placeholder="Ваш Email (Админ: admin@school.com)">
-                <input type="password" id="loginPassword" placeholder="Ваш Пароль (Админ: admin777)">
-                <button onclick="login()" style="margin-top:15px; width: 100%;">Войти в школу →</button>
+                <input type="email" id="loginEmail" placeholder="Email (Директор: admin@school.com)">
+                <input type="password" id="loginPassword" placeholder="Пароль (Директор: admin777)">
+                <button onclick="login()">Войти в аккаунт →</button>
             </div>
             <div>
-                <h2>📝 Стать учеником</h2>
+                <h2>📝 Регистрация ученика</h2>
                 <input type="text" id="regName" placeholder="Имя и фамилия">
                 <input type="email" id="regEmail" placeholder="Электронная почта">
-                <input type="password" id="regPassword" placeholder="Придумайте пароль">
+                <input type="password" id="regPassword" placeholder="Пароль">
                 <select id="regClass"><option value="5">5 класс</option><option value="9">9 класс</option><option value="11">11 класс</option></select>
-                <button onclick="register()" class="btn-success" style="margin-top:15px; width: 100%;">Создать аккаунт ✨</button>
+                <button onclick="register('student')" class="btn-success">Создать аккаунт ✨</button>
             </div>
         </div>
     </div>
 
-    <!-- УЧЕНИК -->
+    <!-- ЭКРАН УЧЕНИКА -->
     <div id="studentScreen" class="container hidden">
         <div class="grid">
             <div>
@@ -67,248 +62,258 @@
                 <div id="materialsContainer">Загрузка уроков...</div>
             </div>
             <div>
-                <h2>📊 Ваш электронный журнал</h2>
-                <div id="studentGrades" class="card">У вас пока нет оценок.</div>
-                <h2>📅 Запись к учителю</h2>
-                <div class="card" style="background: #f0fdf4;">
-                    <select id="teacherSelect"><option value="Иванов И.И. (Математика)">Иванов И.И.</option><option value="Петрова А.С. (Физика)">Петрова А.С.</option></select>
-                    <select id="timeSelect" style="margin-top:10px;"><option value="Понедельник, 15:00">Понедельник, 15:00</option><option value="Среда, 16:30">Среда, 16:30</option></select>
-                    <button onclick="bookLesson()" class="btn-success" style="width:100%; margin-top:15px;">⚡ Записаться</button>
+                <h2>🎁 Магазин наград за монеты</h2>
+                <div class="grid-3">
+                    <div class="card" style="text-align:center;"><h3>📜 Гайд к ЕГЭ</h3><p>Цена: 🪙 20</p><button class="btn-warning" onclick="buyItem('Секретный гайд к ЕГЭ', 20)">Купить</button></div>
+                    <div class="card" style="text-align:center;"><h3>👨‍🏫 Скидка на урок</h3><p>Цена: 🪙 50</p><button class="btn-warning" onclick="buyItem('Скидка на личный урок', 50)">Купить</button></div>
                 </div>
+                <h2>📝 Статус ваших домашних заданий</h2>
+                <div id="studentHWStatus" class="card">Заданий не отправлено.</div>
+                <h2>📊 Журнал тестов</h2>
+                <div id="studentGrades" class="card">Тестов не пройдено.</div>
+                <h2>📅 Запись на урок</h2>
+                <div class="card" style="background:#f0fdf4;"><select id="teacherSelect"></select><select id="timeSelect" style="margin-top:5px;"><option value="Пн, 15:00">Понедельник, 15:00</option><option value="Ср, 16:30">Среда, 16:30</option></select><button onclick="bookLesson()" class="btn-success" style="margin-top:10px;">Записаться</button></div>
             </div>
         </div>
-        <button class="logout-btn" onclick="logout()">🏃 Выйти из системы</button>
+        <button onclick="location.reload()" style="background:var(--danger); margin-top:20px;">🏃 Выйти из системы</button>
     </div>
 
-    <!-- АДМИНИСТРАТОР -->
+    <!-- ПАНЕЛЬ УЧИТЕЛЯ / ДИРЕКТОРА -->
     <div id="adminScreen" class="container hidden">
-        <h2>👑 Панель Управления и Классный Журнал</h2>
-        <div class="card" style="background: #eff6ff;">
-            <h3>➕ Опубликовать масштабный урок</h3>
+        <h2 id="panelTitle">👑 Управление Академией</h2>
+        
+        <!-- Блок добавления контента (только для админа) -->
+        <div id="uploadBlock" class="card" style="background:#eff6ff;">
+            <h3>➕ Создать новый урок</h3>
             <div class="grid">
                 <div>
                     <select id="matClass"><option value="5">5 класс</option><option value="9">9 класс</option><option value="11">11 класс</option></select>
-                    <input type="text" id="matTitle" placeholder="Название темы урока">
-                    <textarea id="matContent" placeholder="Текст лекции и теория..."></textarea>
+                    <input type="text" id="matTitle" placeholder="Тема урока">
+                    <textarea id="matContent" placeholder="Текст лекции..."></textarea>
                 </div>
                 <div>
-                    <input type="text" id="matVideo" placeholder="Ссылка на видео с YouTube">
-                    <input type="text" id="matQuestion" placeholder="Вопрос проверочного теста">
-                    <input type="text" id="matAnswer" placeholder="Правильный ответ на тест">
+                    <input type="text" id="matVideo" placeholder="Ссылка на YouTube">
+                    <input type="text" id="matQuestion" placeholder="Вопрос теста">
+                    <input type="text" id="matAnswer" placeholder="Ответ на тест">
                 </div>
             </div>
-            <button onclick="uploadMaterial()" style="width: 100%; margin-top: 15px;">🚀 Запустить интерактивный урок</button>
+            <button onclick="uploadMaterial()" style="margin-top:15px;">🚀 Запустить урок на сайт</button>
         </div>
-        <div class="grid" style="margin-top: 2rem;">
+
+        <!-- Регистрация учителей (только для админа) -->
+        <div id="teacherRegBlock" class="card" style="background:#f0fdf4;">
+            <h3>👨‍🏫 Зарегистрировать нового преподавателя</h3>
+            <div class="grid">
+                <input type="text" id="tName" placeholder="ФИО Учителя (например: Петрова А.С.)">
+                <input type="email" id="tEmail" placeholder="Email Учителя">
+                <input type="password" id="tPassword" placeholder="Пароль для Учителя">
+            </div>
+            <button onclick="register('teacher')" class="btn-success" style="margin-top:10px;">Добавить учителя в базу данных</button>
+        </div>
+
+        <!-- Общие списки управления -->
+        <div class="grid">
+            <div>
+                <h3>📝 Домашние задания на проверку</h3>
+                <div id="adminHWList">Заданий нет.</div>
+            </div>
+            <div>
+                <h3>📆 Записи на ваши уроки</h3>
+                <div id="adminApps">Записей нет.</div>
+            </div>
+        </div>
+
+        <div class="grid" style="margin-top:20px;">
             <div><h3>👥 База учеников</h3><div id="adminStudents"></div></div>
-            <div><h3>📆 Записи на уроки</h3><div id="adminApps"></div></div>
+            <div><h3>👨‍🏫 Список учителей</h3><div id="adminTeachers"></div></div>
         </div>
-        <div class="card" style="margin-top:20px;"><h3>📊 Журнал оценок всей школы</h3><div id="adminGradesList">Оценок пока нет.</div></div>
-        <button class="logout-btn" onclick="logout()">🔒 Закрыть панель</button>
+
+        <div class="card" style="margin-top:20px;"><h3>📊 Общий журнал тестов</h3><div id="adminGradesList">Оценок нет.</div></div>
+        <div id="ordersBlock" class="card" style="margin-top:20px;"><h3>🎁 Купленные награды учеников</h3><div id="adminOrdersList">Покупок нет.</div></div>
+        
+        <button onclick="location.reload()" style="background:var(--danger); margin-top:20px;">🔒 Закрыть панель</button>
     </div>
 
     <script>
-        let currentUser = null;
+                let currentUser = null;
+
+        async function api(u, m='GET', b=null) {
+            const o = { method: m, headers: { 'Content-Type': 'application/json' } };
+            if (b) o.body = JSON.stringify(b);
+            const r = await fetch(u, o); return r.json();
+        }
 
         async function login() {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
+            const d = await api('/api/login', 'POST', { email, password });
+            if (d.success) { 
+                currentUser = { email, ...d.user }; 
+                document.getElementById('authScreen').classList.add('hidden'); 
+                if (d.role === 'admin' || d.role === 'teacher') showAdmin(d.role); 
+                else showStudent(); 
+            } else alert(d.message);
+        }
 
-            const res = await fetch('/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
-            });
-            const data = await res.json();
-
-            if (data.success) {
-                currentUser = data.user;
-                document.getElementById('authScreen').classList.add('hidden');
-                if (data.role === 'admin') { showAdmin(); } else { showStudent(); }
+        async function register(role) {
+            let body = {};
+            if (role === 'student') {
+                body = { name: document.getElementById('regName').value, email: document.getElementById('regEmail').value, password: document.getElementById('regPassword').value, schoolClass: document.getElementById('regClass').value, role: 'student' };
             } else {
-                alert(data.message);
+                body = { name: document.getElementById('tName').value, email: document.getElementById('tEmail').value, password: document.getElementById('tPassword').value, schoolClass: 'all', role: 'teacher' };
             }
+            const d = await api('/api/register', 'POST', body); alert(d.message);
+            if (role === 'teacher') loadAdminDashboard();
         }
 
-        async function register() {
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            const password = document.getElementById('regPassword').value;
-            const schoolClass = document.getElementById('regClass').value;
-
-            const res = await fetch('/api/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, password, schoolClass })
-            });
-            const data = await res.json();
-            alert(data.message);
+        function showStudent() { 
+            document.getElementById('studentScreen').classList.remove('hidden'); 
+            document.getElementById('coinBalance').classList.remove('hidden');
+            updateCoinsUI(currentUser.coins);
+            document.getElementById('userInfo').innerText = `✨ Ученик: ${currentUser.name} | Класс: ${currentUser.class}`; 
+            loadStudentMaterials(); loadStudentGrades(); loadStudentHW(); loadTeachersList();
         }
 
-        function showStudent() {
-            document.getElementById('studentScreen').classList.remove('hidden');
-            document.getElementById('userInfo').innerText = `✨ Ученик: ${currentUser.name} | Класс: ${currentUser.class}`;
-            loadStudentMaterials();
-            loadStudentGrades();
+        function updateCoinsUI(c) { document.getElementById('userCoins').innerText = c; }
+
+        async function loadTeachersList() {
+            const d = await api(`/api/dashboard/admin/all`);
+            const select = document.getElementById('teacherSelect');
+            select.innerHTML = d.teachers.map(t => `<option value="${t.name}|${t.email}">${t.name}</option>`).join('') || '<option>Нет доступных учителей</option>';
         }
 
         async function loadStudentMaterials() {
-            const res = await fetch(`/api/materials/${currentUser.class}`);
-            const materials = await res.json();
+            const materials = await api(`/api/materials/${currentUser.class}`);
             const container = document.getElementById('materialsContainer');
-            
-            if (materials.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-muted); font-style: italic;">Уроков пока нет.</p>';
-                return;
-            }
-
+            if (materials.length === 0) { container.innerHTML = '<p>Уроков пока нет.</p>'; return; }
             container.innerHTML = materials.map(m => {
-                let videoHTML = '';
+                let videoHTML = '', testHTML = '';
                 if (m.videoUrl) {
-                    let videoId = m.videoUrl.split('v=')[1] || m.videoUrl.split('/').pop();
-                    if (videoId && videoId.includes('&')) videoId = videoId.split('&')[0];
-                    videoHTML = `<div class="video-container"><iframe src="https://youtube.com{videoId}" allowfullscreen></iframe></div>`;
+                    let vId = m.videoUrl.split('v=')[1] || m.videoUrl.split('/').pop();
+                    if (vId.includes('&')) vId = vId.split('&')[0];
+                    videoHTML = `<div class="video-container"><iframe src="https://youtube.com{vId}" allowfullscreen></iframe></div>`;
                 }
-
-                let testHTML = '';
                 if (m.testQuestion) {
-                    testHTML = `
-                        <div class="card" style="background: #f8fafc; border: 1px dashed var(--primary); margin-top:15px;">
-                            <h4>📝 Проверка знаний</h4>
-                            <p><b>Вопрос:</b> ${m.testQuestion}</p>
-                            <input type="text" id="ans-${m.id}" placeholder="Введите ваш answer...">
-                            <button onclick="checkTest('${m.id}', '${m.title}', '${m.testAnswer}')" style="margin-top:10px; width:auto; padding:8px 15px;">Проверить answer</button>
-                        </div>
-                    `;
+                    testHTML = `<div class="card" style="background:#f8fafc; border:1px dashed #4f46e5; margin-top:10px;"><h4>📝 Проверка знаний</h4><p>${m.testQuestion}</p><input type="text" id="ans-${m.id}" placeholder="Ответ..."><button onclick="checkTest('${m.id}','${m.title}','${m.testAnswer}')" style="margin-top:10px; padding:6px;">Проверить тест (+10 🪙)</button></div>`;
                 }
-
                 return `
                     <div class="card">
                         <h3>📘 ${m.title}</h3>
-                        <p style="white-space: pre-line;">${m.content}</p>
+                        <p style="white-space:pre-line;">${m.content}</p>
                         ${videoHTML}
                         ${testHTML}
-                        <div style="margin-top:20px;">
-                            <h4>💬 Вопросы преподавателю</h4>
-                            <div class="chat-box" id="chat-${m.id}">Загрузка чата...</div>
-                            <div style="display:flex; gap:10px; margin-top:10px;">
-                                <input type="text" id="msg-${m.id}" placeholder="Задать вопрос по уроку...">
-                                <button onclick="sendComment('${m.id}')" style="width:auto; padding:10px 20px;">Отправить</button>
-                            </div>
+                        
+                        <!-- РАЗВЕРНУТОЕ ДОМАШНЕЕ ЗАДАНИЕ -->
+                        <div class="card" style="margin-top:15px; border-color:#bfdbfe; background:#eff6ff;">
+                            <h4>📤 Сдать развернутое ДЗ преподавателю</h4>
+                            <textarea id="hw-text-${m.id}" placeholder="Впишите ваше развернутое решение задачи или эссе сюда..."></textarea>
+                            <button onclick="submitHW('${m.id}','${m.title}')" class="btn-success" style="margin-top:5px;">Отправить ДЗ на проверку (+20 🪙 за "5")</button>
                         </div>
-                    </div>
-                `;
-            }).join('');
 
+                        <div style="margin-top:15px;">
+                            <h4>💬 Чат к уроку</h4>
+                            <div class="chat-box" id="chat-${m.id}">Загрузка...</div>
+                            <div style="display:flex; gap:10px; margin-top:10px;"><input type="text" id="msg-${m.id}" placeholder="Вопрос..."><button onclick="sendComment('${m.id}')" style="width:auto;">Отправить</button></div>
+                        </div>
+                    </div>`;
+            }).join('');
             materials.forEach(m => loadComments(m.id));
         }
 
-        async function checkTest(lessonId, lessonTitle, correctAnswer) {
-            const userAnswer = document.getElementById(`ans-${lessonId}`).value.trim();
-            if (!userAnswer) return alert('Введите answer!');
-
-            let isCorrect = userAnswer.toLowerCase() === correctAnswer.toLowerCase();
-            alert(isCorrect ? 'Отлично (5/5)' : 'Неверно (Перечитайте теорию)');
-
-            if (isCorrect) {
-                await fetch('/api/grades/save', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ studentEmail: currentUser.email, lessonTitle, score: '5' })
-                });
-                loadStudentGrades();
+        async function checkTest(id, title, correct) {
+            const ans = document.getElementById(`ans-${id}`).value.trim(); if (!ans) return alert('Введите ответ!');
+            let ok = ans.toLowerCase() === correct.toLowerCase(); alert(ok ? 'Отлично! Вы получили 5/5 и заработали 10 монет! 🪙' : 'Неверно. Попробуйте еще раз.');
+            if (ok) { 
+                const d = await api('/api/grades/save', 'POST', { studentEmail: currentUser.email, lessonTitle: title, score: '5' }); 
+                updateCoinsUI(d.coins); loadStudentGrades(); 
             }
+        }
+
+        async function submitHW(lessonId, lessonTitle) {
+            const text = document.getElementById(`hw-text-${lessonId}`).value.trim(); if (!text) return alert('Напишите ответ!');
+            const tInfo = document.getElementById('teacherSelect').value.split('|');
+            await api('/api/hw/submit', 'POST', { studentEmail: currentUser.email, studentName: currentUser.name, lessonTitle, text, teacherName: tInfo[0], teacherEmail: tInfo[1] });
+            alert('Домашнее задание успешно отправлено!'); document.getElementById(`hw-text-${lessonId}`).value = ''; loadStudentHW();
+        }
+
+        async function loadStudentHW() {
+            const d = await api(`/api/hw/student/${currentUser.email}`);
+            document.getElementById('studentHWStatus').innerHTML = d.length === 0 ? '<p>Заданий нет</p>' : d.map(h => `<div style="padding:6px; border-bottom:1px solid #f1f5f9;">📌 <b>${h.lessonTitle}</b> — <span style="font-weight:bold; color:${h.status==='Проверено'?'var(--success)':'var(--warning)'}">${h.status}</span> ${h.grade ? `<br><b>Оценка: ${h.grade}</b><br><i>Отзыв: ${h.review}</i>` : ''}</div>`).join('');
+        }
+
+        async function buyItem(title, price) {
+            const d = await api('/api/shop/buy', 'POST', { email: currentUser.email, itemTitle: title, price });
+            alert(d.message); if (d.success) updateCoinsUI(d.coins);
         }
 
         async function loadStudentGrades() {
-            const res = await fetch(`/api/grades/${currentUser.email}`);
-            const grades = await res.json();
-            const container = document.getElementById('studentGrades');
-            if (grades.length === 0) {
-                container.innerHTML = '<p>Оценок пока нет.</p>';
-            } else {
-                container.innerHTML = '<ul>' + grades.map(g => `<li>${g.date} - ${g.lessonTitle}: <b>Оценка: ${g.score}</b></li>`).join('') + '</ul>';
-            }
+            const g = await api(`/api/grades/${currentUser.email}`);
+            document.getElementById('studentGrades').innerHTML = g.length === 0 ? '<p>Оценок нет</p>' : '<ul>' + g.map(x => `<li>${x.date} - ${x.lessonTitle}: <b>Оценка: ${x.score}</b></li>`).join('') + '</ul>';
         }
 
-        async function loadComments(lessonId) {
-            const res = await fetch(`/api/comments/${lessonId}`);
-            const comments = await res.json();
-            const box = document.getElementById(`chat-${lessonId}`);
-            if (!box) return;
-            if (comments.length === 0) {
-                box.innerHTML = '<p style="color:var(--text-muted); font-style:italic; margin:0;">Вопросов пока нет.</p>';
-            } else {
-                box.innerHTML = comments.map(c => `<div class="comment-item"><small style="color:var(--primary); font-weight:bold;">${c.userName}</small> <small style="color:var(--text-muted); float:right;">${c.date}</small><div style="margin-top:3px;">${c.text}</div></div>`).join('');
-            }
+        async function loadComments(id) {
+            const c = await api(`/api/comments/${id}`); const box = document.getElementById(`chat-${id}`); if (!box) return;
+            box.innerHTML = c.length === 0 ? '<p style="color:#64748b; font-style:italic; margin:0;">Вопросов нет.</p>' : c.map(x => `<div class="comment-item"><b>${x.userName}</b> <small style="color:#64748b; float:right;">${x.date}</small><div>${x.text}</div></div>`).join('');
         }
 
-        async function sendComment(lessonId) {
-            const input = document.getElementById(`msg-${lessonId}`);
-            const text = input.value.trim();
-            if (!text) return;
-
-            await fetch('/api/comments/add', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ lessonId, userName: currentUser.name, text })
-            });
-            input.value = '';
-            loadComments(lessonId);
+        async function sendComment(id) {
+            const input = document.getElementById(`msg-${id}`); const text = input.value.trim(); if (!text) return;
+            await api('/api/comments/add', 'POST', { lessonId: id, userName: currentUser.name, text }); input.value = ''; loadComments(id);
         }
 
         async function bookLesson() {
-            const teacherName = document.getElementById('teacherSelect').value;
-            const lessonTime = document.getElementById('timeSelect').value;
-            await fetch('/api/appointments/book', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ studentEmail: currentUser.email, teacherName, lessonTime })
-            });
-            alert('Вы успешно записались на урок!');
+            const tInfo = document.getElementById('teacherSelect').value.split('|'); const time = document.getElementById('timeSelect').value;
+            await api('/api/appointments/book', 'POST', { studentEmail: currentUser.email, teacherName: tInfo[0], teacher_email: tInfo[1], lesson_time: time }); alert('Вы записались!');
         }
 
-        function showAdmin() {
-            document.getElementById('adminScreen').classList.remove('hidden');
-            document.getElementById('userInfo').innerText = `👑 Режим: Главный Администратор / Директор`;
-            loadAdminDashboard();
+        function showAdmin(role) { 
+            document.getElementById('adminScreen').classList.remove('hidden'); 
+            document.getElementById('panelTitle').innerText = role === 'admin' ? '👑 Панель Управления Директора' : '👨‍🏫 Кабинет Преподавателя';
+            if (role === 'teacher') {
+                document.getElementById('uploadBlock').classList.add('hidden');
+                document.getElementById('teacherRegBlock').classList.add('hidden');
+                document.getElementById('ordersBlock').classList.add('hidden');
+            }
+            document.getElementById('userInfo').innerText = `Вход: ${currentUser.name} (${role==='admin'?'Директор':'Учитель'})`; 
+            loadAdminDashboard(); 
         }
 
         async function loadAdminDashboard() {
-            const res = await fetch('/api/admin/dashboard');
-            const data = await res.json();
+            const d = await api(`/api/dashboard/${currentUser.role}/${currentUser.email}`);
+            document.getElementById('adminStudents').innerHTML = d.students.map(s => `<div class="admin-box"><strong>👨‍🎓 ${s.name}</strong><br><small>${s.class} класс | 🪙 Баланс: ${s.coins || 0}</small></div>`).join('') || '<p>Учеников нет</p>';
+                        document.getElementById('adminTeachers').innerHTML = d.teachers.map(t => `<div class="admin-box" style="border-left-color:var(--warning);"><strong>👨‍🏫 ${t.name}</strong><br><small>${t.email}</small></div>`).join('') || '<p>Учителей нет</p>';
+            document.getElementById('adminApps').innerHTML = d.appointments.map(a => `<div class="admin-box" style="background:#f0fdf4;"><b>Ученик:</b> ${a.student_name || a.studentEmail}<br><b>К кому:</b> ${a.teacherName}<br><b>Время:</b> ${a.lesson_time}</div>`).join('') || '<p>Записей нет</p>';
+            document.getElementById('adminGradesList').innerHTML = d.grades.map(g => `<div style="padding:6px; border-bottom:1px solid #f1f5f9;">🗓 ${g.date} — <b>${g.student_name || g.studentEmail}</b> получил оценку: <b style="color:var(--success);">${g.score}</b> за "${g.lesson_title}"</div>`).join('') || '<p>Журнал пуст</p>';
+            if (document.getElementById('adminOrdersList')) document.getElementById('adminOrdersList').innerHTML = d.orders.map(o => `<div class="admin-box" style="border-left-color:var(--warning);">📦 <b>${o.email}</b> купил награду: <b>${o.itemTitle}</b> <small style="float:right;">${o.date}</small></div>`).join('') || '<p>Покупок нет</p>';
+            
+            // Загрузка ДЗ для проверки
+            document.getElementById('adminHWList').innerHTML = d.homeworks.length === 0 ? '<p>Домашних заданий на проверку нет.</p>' : d.homeworks.map(h => `
+                <div class="card" style="border-left: 4px solid var(--primary);">
+                    <p><b>От ученика:</b> ${h.studentName} (${h.studentEmail})</p>
+                    <p><b>Урок:</b> ${h.lessonTitle}</p>
+                    <div style="background:#f8fafc; padding:8px; border-radius:6px; font-style:italic;">"${h.text}"</div>
+                    ${h.status === 'Проверено' ? `<p style="color:var(--success); font-weight:bold; margin-top:5px;">Проверено. Оценка: ${h.grade}</p>` : `
+                    <div style="margin-top:10px; display:flex; gap:5px;">
+                        <select id="grade-${h.id}" style="width:70px; margin:0;"><option value="5">5</option><option value="4">4</option><option value="3">3</option></select>
+                        <input type="text" id="review-${h.id}" placeholder="Отзыв учителя..." style="margin:0;">
+                        <button onclick="reviewHW('${h.id}')" style="width:auto; margin:0; padding:6px 12px;">Выставить</button>
+                    </div>`}
+                </div>`).join('');
+        }
 
-            document.getElementById('adminStudents').innerHTML = data.students.map(s => `<div class="admin-box"><strong>👨‍🎓 ${s.name}</strong><br><small>${s.class} класс | ${s.email}</small></div>`).join('') || '<p>Учеников нет</p>';
-            document.getElementById('adminApps').innerHTML = data.appointments.map(a => `<div class="admin-box" style="border-left-color: var(--success); background:#f0fdf4;"><b>Ученик:</b> ${a.student_name}<br><b>Учитель:</b> ${a.teacher_name}<br><b>Время:</b> ${a.lesson_time}</div>`).join('') || '<p>Записей нет</p>';
-            document.getElementById('adminGradesList').innerHTML = data.grades.map(g => `<div style="padding:8px; border-bottom:1px solid #f1f5f9;">🗓 ${g.date} — <b>${g.student_name}</b> за урок "${g.lesson_title}" получил: <b style="color:var(--success);">${g.score}</b></div>`).join('') || '<p>Журнал пуст</p>';
+        async function reviewHW(id) {
+            const grade = document.getElementById(`grade-${id}`).value;
+            const review = document.getElementById(`review-${id}`).value.trim();
+            await api('/api/hw/review', 'POST', { id, grade, review }); alert('Оценка и монеты отправлены ученику!'); loadAdminDashboard();
         }
 
         async function uploadMaterial() {
-            const schoolClass = document.getElementById('matClass').value;
-            const title = document.getElementById('matTitle').value;
-            const content = document.getElementById('matContent').value;
-            const videoUrl = document.getElementById('matVideo').value;
-            const testQuestion = document.getElementById('matQuestion').value;
-            const testAnswer = document.getElementById('matAnswer').value;
-
-            const res = await fetch('/api/admin/upload', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ schoolClass, title, content, videoUrl, testQuestion, testAnswer })
-            });
-            const data = await res.json();
-            alert(data.message);
-
-            document.getElementById('matTitle').value = ''; document.getElementById('matContent').value = '';
-            document.getElementById('matVideo').value = ''; document.getElementById('matQuestion').value = '';
-            document.getElementById('matAnswer').value = '';
-            loadAdminDashboard();
-        }
-        
-        function logout() { 
-            location.reload(); 
+            const schoolClass = document.getElementById('matClass').value, title = document.getElementById('matTitle').value, content = document.getElementById('matContent').value, videoUrl = document.getElementById('matVideo').value, testQuestion = document.getElementById('matQuestion').value, testAnswer = document.getElementById('matAnswer').value;
+            const d = await api('/api/admin/upload', 'POST', { schoolClass, title, content, videoUrl, testQuestion, testAnswer }); alert(d.message);
+            ['matTitle', 'matContent', 'matVideo', 'matQuestion', 'matAnswer'].forEach(id => document.getElementById(id).value = ''); loadAdminDashboard();
         }
     </script>
 </body>
 </html>
+
 
