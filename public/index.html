@@ -3,135 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 Моя Цифровая Академия</title>
+    <title>🚀 Моя Цифровая Академия LMS v2.0</title>
     <style>
         :root { --primary: #4f46e5; --success: #10b981; --warning: #f59e0b; --danger: #ef4444; --background: #f8fafc; }
-        body { font-family: system-ui, sans-serif; margin: 0; background: var(--background); color: #1e293b; }
-        header { background: linear-gradient(135deg, var(--primary), #06b6d4); color: white; padding: 2rem; text-align: center; position: relative; }
-        .stats-badge { position: absolute; top: 15px; right: 20px; display: flex; gap: 8px; }
-        .badge-item { background: rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; }
-        .container { max-width: 950px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; background: var(--background); color: #1e293b; line-height: 1.5; }
+        header { background: linear-gradient(135deg, var(--primary), #06b6d4); color: white; padding: 2rem; text-align: center; position: relative; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
+        .stats-badge { position: absolute; top: 15px; right: 20px; display: flex; gap: 8px; flex-wrap: wrap; }
+        .badge-item { background: rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; backdrop-filter: blur(5px); }
+        .container { max-width: 1050px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 20px; box-shadow: 0 4px 25px rgba(0,0,0,0.05); }
         .hidden { display: none !important; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        input, select, textarea, button { width: 100%; padding: 12px; margin-top: 8px; box-sizing: border-box; border: 1px solid #e2e8f0; border-radius: 8px; }
-        button { background: var(--primary); color: white; font-weight: bold; cursor: pointer; border: none; }
-        button:hover { background: #4338ca; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        input, select, textarea, button { width: 100%; padding: 12px; margin-top: 8px; box-sizing: border-box; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; }
+        button { background: var(--primary); color: white; font-weight: bold; cursor: pointer; border: none; transition: 0.2s; }
+        button:hover { background: #4338ca; transform: translateY(-1px); }
         .btn-success { background: var(--success); }
-        .card { border: 1px solid #e2e8f0; padding: 15px; margin-bottom: 15px; border-radius: 12px; background: white; }
-        .admin-box { background: #f1f5f9; padding: 10px; margin-bottom: 8px; border-radius: 8px; border-left: 4px solid var(--primary); }
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; margin: 10px 0; }
+        .btn-success:hover { background: #059669; }
+        .btn-warning { background: var(--warning); }
+        .card { border: 1px solid #e2e8f0; padding: 20px; margin-bottom: 15px; border-radius: 16px; background: white; }
+        .admin-box { background: #f1f5f9; padding: 12px; margin-bottom: 8px; border-radius: 10px; border-left: 4px solid var(--primary); }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin: 12px 0; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-        .chat-box { background: #f8fafc; border-radius: 8px; padding: 10px; max-height: 120px; overflow-y: auto; border: 1px solid #e2e8f0; margin-top: 10px; }
-        .comment-item { background: white; padding: 6px; border-radius: 6px; margin-bottom: 6px; font-size: 0.85rem; }
-        .xp-bar { background: #e2e8f0; border-radius: 10px; height: 10px; width: 100%; margin-top: 5px; overflow: hidden; }
-        .xp-progress { background: #3b82f6; height: 100%; width: 0%; }
+        .chat-box { background: #f8fafc; border-radius: 10px; padding: 10px; max-height: 150px; overflow-y: auto; border: 1px solid #e2e8f0; margin-top: 10px; }
+        .comment-item { background: white; padding: 8px; border-radius: 8px; margin-bottom: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); font-size: 0.9rem; }
+        .xp-bar { background: #e2e8f0; border-radius: 10px; height: 12px; width: 100%; margin-top: 5px; overflow: hidden; }
+        .xp-progress { background: #3b82f6; height: 100%; width: 0%; transition: width 0.4s ease; }
     </style>
 </head>
 <body>
     <header>
-        <h1 style="margin:0;">🎓 ЦИФРОВАЯ АКАДЕМИЯ</h1>
-        <div id="userInfo" style="margin-top:10px;">Вход в систему</div>
+        <h1 style="margin:0;">🎓 СУПЕР АКАДЕМИЯ LMS 2.0</h1>
+        <div id="userInfo" style="margin-top:10px; font-weight: 500;">Добро пожаловать</div>
         <div id="statsPanel" class="stats-badge hidden">
             <div class="badge-item" style="background:#f59e0b; color:white;">🪙 <span id="userCoins">0</span></div>
-            <div class="badge-item" style="background:#3b82f6; color:white;">⭐ Лвл <span id="userLevel">1</span></div>
+            <div class="badge-item" style="background:#3b82f6; color:white;">⭐ Уровень <span id="userLevel">1</span></div>
             <div class="badge-item" style="background:#10b981; color:white;">🔥 XP: <span id="userXp">0</span></div>
+            <div class="badge-item" style="background:#ef4444; color:white;">⚡ Стрик: 3 Дня!</div>
             <a href="/wheel.html" style="background:#ec4899; color:white; text-decoration:none;" class="badge-item">🎡 Колесо</a>
-            <a href="/ai-hub.html" style="background:#4f46e5; color:white; text-decoration:none;" class="badge-item">🧠 AI</a>
+            <a href="/ai-hub.html" style="background:#4f46e5; color:white; text-decoration:none;" class="badge-item">🧠 AI-Куратор</a>
             <a href="/achievements.html" style="background:#ea580c; color:white; text-decoration:none;" class="badge-item">🏆 Зал Славы</a>
         </div>
     </header>
 
+    <!-- АВТОРИЗАЦИЯ И РЕГИСТРАЦИЯ -->
     <div id="authScreen" class="container">
         <div class="grid">
-            <div style="border-right:1px solid #e2e8f0; padding-right:20px;">
-                <h2>🔐 Вход</h2>
+            <div style="border-right: 1px solid #e2e8f0; padding-right: 20px;">
+                <h2>🔐 Вход в систему</h2>
                 <input type="email" id="loginEmail" placeholder="Email (Директор: admin@school.com)">
                 <input type="password" id="loginPassword" placeholder="Пароль (Директор: admin777)">
-                <button onclick="login()">Войти →</button>
+                <button onclick="login()">Войти в аккаунт →</button>
             </div>
             <div>
                 <h2>📝 Регистрация ученика</h2>
-                <input type="text" id="regName" placeholder="Имя и фамилия">
-                <input type="email" id="regEmail" placeholder="Email">
-                <input type="password" id="regPassword" placeholder="Пароль">
+                <input type="text" id="regName" placeholder="Ваше полное имя">
+                <input type="email" id="regEmail" placeholder="Электронная почта">
+                <input type="password" id="regPassword" placeholder="Придумайте пароль">
                 <select id="regClass"><option value="5">5 класс</option><option value="9">9 класс</option><option value="11">11 класс</option></select>
                 <button onclick="register('student')" class="btn-success">Создать аккаунт ✨</button>
             </div>
         </div>
     </div>
 
+    <!-- ИНТЕРФЕЙС УЧЕНИКА -->
     <div id="studentScreen" class="container hidden">
-        <div class="card">
-            <h3>🎖️ Ваша статистика</h3><div id="studentBadges" style="display:flex; gap:5px; margin-bottom:5px;"></div>
+        <div style="margin-bottom:20px;" class="card">
+            <h3>🎖️ Ваша игровая статистика</h3>
+            <div id="studentBadges" style="display:flex; gap:5px; margin-bottom:10px; flex-wrap:wrap;"></div>
             <div class="xp-bar"><div id="xpProgress" class="xp-progress"></div></div>
         </div>
-        <div style="margin-bottom:15px;"><a href="/board.html" style="display:block; text-decoration:none; background:#4f46e5; color:white; padding:10px; border-radius:8px; text-align:center; font-weight:bold;">🎨 Открыть Онлайн-Доску</a></div>
+        <div style="margin-bottom:15px; text-align:center;"><a href="/board.html" style="display:block; text-decoration:none; background:#4f46e5; color:white; padding:12px; border-radius:10px; font-weight:bold;">🎨 Открыть интерактивную облачную доску</a></div>
         <div class="grid">
-            <div><h2>📚 Ваши уроки</h2><div id="materialsContainer">Загрузка...</div></div>
             <div>
-                <h2>🎁 Магазин</h2>
-                <div style="display:flex; gap:10px;"><button class="btn-success" onclick="buyItem('Гайд', 20)">📜 Гайд (20🪙)</button><button class="btn-success" onclick="buyItem('Скидка', 50)">👨‍🏫 Скидка (50🪙)</button></div>
-                <h2>📝 Статус ДЗ</h2><div id="studentHWStatus" class="card">Нет ДЗ.</div>
-                <h2>📊 Журнал тестов</h2><div id="studentGrades" class="card">Нет оценок.</div>
-                <h2>📅 Запись к учителю</h2><div class="card"><select id="teacherSelect"></select><button onclick="bookLesson()" class="btn-success" style="margin-top:5px;">Записаться</button></div>
+                <h2>📚 Ваши доступные уроки</h2>
+                <div id="materialsContainer">Загрузка ваших уроков...</div>
+            </div>
+            <div>
+                <h2>🎁 Магазин наград и бонусов</h2>
+                <div class="grid-3">
+                    <div class="card" style="text-align:center; padding:12px;"><h4>📜 Гайд к экзаменам</h4><p>Цена: 🪙 20</p><button class="btn-warning" onclick="buyItem('Секретный гайд к ЕГЭ', 20)">Купить</button></div>
+                    <div class="card" style="text-align:center; padding:12px;"><h4>👨‍🏫 Личная консультация</h4><p>Цена: 🪙 50</p><button class="btn-warning" onclick="buyItem('Скидка на личный урок', 50)">Купить</button></div>
+                </div>
+                <h2>📝 Статус домашних заданий</h2>
+                <div id="studentHWStatus" class="card">Заданий пока не отправлено.</div>
+                <h2>📊 История пройденных тестов</h2>
+                <div id="studentGrades" class="card">Тестов еще не пройдено.</div>
+                <h2>📅 Запись к вашему учителю</h2>
+                <div class="card" style="background:#f0fdf4;"><select id="teacherSelect"></select><select id="timeSelect" style="margin-top:5px;"><option value="Пн, 15:00">Понедельник, 15:00</option><option value="Ср, 16:30">Среда, 16:30</option></select><button onclick="bookLesson()" class="btn-success" style="margin-top:10px;">Записаться</button></div>
             </div>
         </div>
-        <button onclick="location.reload()" style="background:var(--danger); margin-top:20px;">🏃 Выйти</button>
+        <button onclick="location.reload()" style="background:var(--danger); margin-top:20px;">🏃 Выйти из системы</button>
     </div>
 
+    <!-- ИНТЕРФЕЙС УЧИТЕЛЯ / ДИРЕКТОРА -->
     <div id="adminScreen" class="container hidden">
-        <h2 id="panelTitle">👑 Управление</h2>
-        <div style="margin-bottom:15px;"><a href="/board.html" style="display:block; text-decoration:none; background:#4f46e5; color:white; padding:10px; border-radius:8px; text-align:center; font-weight:bold;">🎨 Открыть Онлайн-Доску</a></div>
+        <h2 id="panelTitle">👑 Управление Академией</h2>
+        <div style="margin-bottom:15px; text-align:center;"><a href="/board.html" style="display:block; text-decoration:none; background:#4f46e5; color:white; padding:12px; border-radius:10px; font-weight:bold;">🎨 Открыть интерактивную облачную доску</a></div>
+        
         <div id="uploadBlock" class="card" style="background:#eff6ff;">
-            <h3>➕ Создать интерактивный урок</h3>
-           <div style="background:white; padding:15px; border:2px dashed var(--warning); margin-bottom:15px; text-align:center;">
-    <h4>🧠 НЕЙРОКОНСТРУКТОР ЭКЗАМЕНОВ</h4>
-    <p style="font-size:0.9rem; color:var(--text-muted);">ИИ может составить полноценный комплексный тест из нескольких вопросов с вариантами ответов.</p>
-    <a href="/quiz-generator.html" style="display:inline-block; text-decoration:none; background:var(--warning); color:#0f172a; padding:10px 20px; border-radius:8px; font-weight:bold;">🤖 Открыть ИИ-Генератор Полных Тестов</a>
-</div>
-
-            <div class="grid">
-                <div><select id="matClass"><option value="5">5 класс</option><option value="9">9 класс</option><option value="11">11 класс</option></select><input type="text" id="matTitle" placeholder="Тема"><textarea id="matContent" placeholder="Текст лекции..."></textarea></div>
-                <div><input type="text" id="matVideo" placeholder="YouTube ссылка"><input type="text" id="matQuestion" placeholder="Вопрос"><input type="text" id="matAnswer" placeholder="Ответ (через черту А|Б|В|Г)"></div>
+            <h3>➕ Создать и опубликовать масштабный урок</h3>
+            <div style="background:white; padding:15px; border:2px dashed var(--warning); margin-bottom:15px; text-align:center;">
+                <h4>🧠 НЕЙРОКОНСТРУКТОР ЭКЗАМЕНОВ</h4>
+                <a href="/quiz-generator.html" style="display:inline-block; text-decoration:none; background:var(--warning); color:#0f172a; padding:10px 20px; border-radius:8px; font-weight:bold;">🤖 Открыть ИИ-Генератор Полных Тестов</a>
             </div>
-            <button onclick="uploadMaterial()" style="margin-top:10px;">🚀 Опубликовать урок</button>
+            <div class="grid">
+                <div>
+                    <select id="matClass"><option value="5">5 класс</option><option value="9">9 класс</option><option value="11">11 класс</option></select>
+                    <input type="text" id="matTitle" placeholder="Тема лекции">
+                    <textarea id="matContent" placeholder="Теоретический материал..."></textarea>
+                </div>
+                <div>
+                    <input type="text" id="matVideo" placeholder="Ссылка на полезное видео с YouTube">
+                    <input type="text" id="matQuestion" placeholder="Вопрос проверочного теста">
+                    <input type="text" id="matAnswer" placeholder="Правильный ответ на тест (через черту А|Б|В|Г)">
+                </div>
+            </div>
+            <button onclick="uploadMaterial()" style="margin-top:15px;">🚀 Запустить интерактивный урок на сайт</button>
         </div>
-        <div id="teacherRegBlock" class="card" style="background:#f0fdf4;"><h3>👨‍🏫 Добавить учителя</h3><div class="grid"><input type="text" id="tName" placeholder="ФИО"><input type="email" id="tEmail" placeholder="Email"><input type="password" id="tPassword" placeholder="Пароль"></div><button onclick="register('teacher')" class="btn-success" style="margin-top:10px;">Зарегистрировать</button></div>
-        <div class="grid"><div><h3>📝 ДЗ на проверку</h3><div id="adminHWList">Нет.</div></div><div><h3>📆 Записи на уроки</h3><div id="adminApps">Нет.</div></div></div>
-        <div class="grid" style="margin-top:15px;"><div><h3>👥 Ученики</h3><div id="adminStudents"></div></div><div><h3>👨‍🏫 Учителя</h3><div id="adminTeachers"></div></div></div>
-        <div class="card" style="margin-top:15px;"><h3>📊 Журнал тестов всей школы</h3><div id="adminGradesList">Пуст.</div></div>
-        <div id="ordersBlock" class="card" style="margin-top:15px;"><h3>🎁 Купленные награды</h3><div id="adminOrdersList">Пуст.</div></div>
-        <button onclick="location.reload()" style="background:var(--danger); margin-top:20px;">🔒 Закрыть панель</button>
+
+        <div id="teacherRegBlock" class="card" style="background:#f0fdf4;">
+            <h3>👨‍🏫 Добавить нового учителя в систему</h3>
+            <div class="grid">
+                <input type="text" id="tName" placeholder="ФИО Учителя">
+                <input type="email" id="tEmail" placeholder="Email Преподавателя">
+                <input type="password" id="tPassword" placeholder="Пароль для входа">
+            </div>
+                        <button onclick="register('teacher')" class="btn-success" style="margin-top:10px;">Зарегистрировать учителя</button>
+        </div>
+
+        <div class="grid">
+            <div><h3>📝 Домашние задания на проверку</h3><div id="adminHWList">Заданий нет.</div></div>
+            <div><h3>📆 Активные записи на ваши уроки</h3><div id="adminApps">Записей нет.</div></div>
+        </div>
+        <div class="grid" style="margin-top:20px;">
+            <div><h3>👥 База зарегистрированных учеников</h3><div id="adminStudents"></div></div>
+            <div><h3>👨‍🏫 Список activeных учителей</h3><div id="adminTeachers"></div></div>
+        </div>
+        <div class="card" style="margin-top:20px;"><h3>📊 Общий журнал успеваемости по тестам</h3><div id="adminGradesList">Оценок нет.</div></div>
+        <div id="ordersBlock" class="card" style="margin-top:20px;"><h3>🎁 Заказы наград из магазина</h3><div id="adminOrdersList">Покупок пока нет.</div></div>
+        <button onclick="location.reload()" style="background:var(--danger); margin-top:20px;">🔒 Закрыть панель управления</button>
     </div>
 
     <script>
         let currentUser = null;
+
         async function api(u, m='GET', b=null) {
             const o = { method: m, headers: { 'Content-Type': 'application/json' } };
             if (b) o.body = JSON.stringify(b);
             const r = await fetch(u, o); return r.json();
         }
+
         async function login() {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             const d = await api('/api/login', 'POST', { email, password });
-            if (d.success) { currentUser = { email, ...d.user }; document.getElementById('authScreen').classList.add('hidden'); if (d.role === 'admin' || d.role === 'teacher') showAdmin(d.role); else showStudent(); } else alert(d.message);
+            if (d.success) { 
+                currentUser = { email, ...d.user }; 
+                document.getElementById('authScreen').classList.add('hidden'); 
+                if (d.role === 'admin' || d.role === 'teacher') showAdmin(d.role); 
+                else showStudent(); 
+            } else alert(d.message);
         }
+
         async function register(role) {
             let body = role === 'student' ? { name: document.getElementById('regName').value, email: document.getElementById('regEmail').value, password: document.getElementById('regPassword').value, schoolClass: document.getElementById('regClass').value, role: 'student' } : { name: document.getElementById('tName').value, email: document.getElementById('tEmail').value, password: document.getElementById('tPassword').value, schoolClass: 'all', role: 'teacher' };
-                        const d = await api('/api/register', 'POST', body); alert(d.message); if (role === 'teacher') loadAdminDashboard();
+            const d = await api('/api/register', 'POST', body); alert(d.message); if (role === 'teacher') loadAdminDashboard();
         }
-        function showStudent() { document.getElementById('studentScreen').classList.remove('hidden'); document.getElementById('statsPanel').classList.remove('hidden'); updateStatsUI(currentUser); loadStudentMaterials(); loadStudentGrades(); loadStudentHW(); loadTeachersList(); }
-        function updateStatsUI(u) { document.getElementById('userCoins').innerText = u.coins; document.getElementById('userLevel').innerText = u.level; document.getElementById('userXp').innerText = u.xp; document.getElementById('xpProgress').style.width = `${(u.xp / (u.level * 100)) * 100}%`; if (u.badges) document.getElementById('studentBadges').innerHTML = u.badges.map(b => `<span class="badge-item" style="background:#4f46e5; color:white; font-size:0.75rem;">${b}</span>`).join(''); }
-        async function loadTeachersList() { const d = await api(`/api/dashboard/admin/all`); document.getElementById('teacherSelect').innerHTML = d.teachers.map(t => `<option value="${t.name}|${t.email}">${t.name}</option>`).join('') || '<option>Нет учителей</option>'; }
-        async function generateAITest() { const topic = document.getElementById('aiTopic').value.trim(); if (!topic) return alert('Введите тему!'); const d = await api('/api/ai/generate-test', 'POST', { topic }); if (d.success) { document.getElementById('matQuestion').value = d.q; document.getElementById('matAnswer').value = `${d.a}|${d.b}|${d.c}|${d.d}`; alert('Тест сгенерирован!'); } }
+
+        function showStudent() { 
+            document.getElementById('studentScreen').classList.remove('hidden'); 
+            document.getElementById('statsPanel').classList.remove('hidden'); 
+            updateStatsUI(currentUser); loadStudentMaterials(); loadStudentGrades(); loadStudentHW(); loadTeachersList(); 
+        }
+
+        function updateStatsUI(u) { 
+            document.getElementById('userCoins').innerText = u.coins; 
+            document.getElementById('userLevel').innerText = u.level; 
+            document.getElementById('userXp').innerText = u.xp; 
+            document.getElementById('xpProgress').style.width = `${(u.xp / (u.level * 100)) * 100}%`; 
+            if (u.badges) document.getElementById('studentBadges').innerHTML = u.badges.map(b => `<span class="badge-item" style="background:#4f46e5; color:white; font-size:0.75rem;">${b}</span>`).join(''); 
+        }
+
+        async function loadTeachersList() { 
+            const d = await api(`/api/dashboard/admin/all`); 
+            document.getElementById('teacherSelect').innerHTML = d.teachers.map(t => `<option value="${t.name}|${t.email}">${t.name}</option>`).join('') || '<option>Нет учителей</option>'; 
+        }
+
         async function loadStudentMaterials() {
             const materials = await api(`/api/materials/${currentUser.class}`);
             const container = document.getElementById('materialsContainer');
             if (materials.length === 0) { container.innerHTML = '<p>Уроков пока нет.</p>'; return; }
             container.innerHTML = materials.map(m => {
                 let videoHTML = '', testHTML = '';
-                if (m.videoUrl) { let vId = m.videoUrl.split('v=')[1] || m.videoUrl.split('/').pop(); if(vId.includes('&')) vId=vId.split('&')[0]; videoHTML = `<div class="video-container"><iframe src="https://youtube.com{vId}" allowfullscreen></iframe></div>`; }
+                if (m.videoUrl) { 
+                    let vId = m.videoUrl.split('v=')[1] || m.videoUrl.split('/').pop(); 
+                    if(vId.includes('&')) vId=vId.split('&')[0]; 
+                    videoHTML = `<div class="video-container"><iframe src="https://youtube.com{vId}" allowfullscreen></iframe></div>`; 
+                }
                 if (m.testQuestion && m.testAnswer && m.testAnswer.includes('|')) {
                     const variants = m.testAnswer.split('|'), correct = variants[0], shuffled = [...variants].sort(() => Math.random() - 0.5);
                     testHTML = `<div class="card" style="background:#f8fafc; border:1px dashed #4f46e5;"><h4>🎯 Квиз-Тест</h4><p>${m.testQuestion}</p><div id="quiz-${m.id}">${shuffled.map(v => `<button onclick="checkQuiz(this,'${m.id}','${v}','${correct}','${m.title}')" style="background:white; color:#1e293b; margin-top:5px; border:1px solid #cbd5e1;">${v}</button>`).join('')}</div></div>`;
@@ -140,30 +208,83 @@
             }).join('');
             materials.forEach(m => loadComments(m.id));
         }
+
         async function checkQuiz(btn, id, sel, corr, title) {
             const buttons = document.getElementById(`quiz-${id}`).querySelectorAll('button'); buttons.forEach(b => b.disabled = true);
-            if (sel === corr) { btn.style.background = '#10b981'; btn.style.color = 'white'; alert('Верно! +15🪙 | +50XP'); const d = await api('/api/grades/save', 'POST', { studentEmail: currentUser.email, lessonTitle: title, score: '5' }); updateStatsUI(d.user); loadStudentGrades(); } 
-            else { btn.style.background = '#ef4444'; btn.style.color = 'white'; alert('Неверно!'); buttons.forEach(b => { if(b.innerText === corr) { b.style.background = '#10b981'; b.style.color = 'white'; } }); }
+            if (sel === corr) { 
+                btn.style.background = '#10b981'; btn.style.color = 'white'; alert('Верно! +15🪙 | +50XP'); 
+                const d = await api('/api/grades/save', 'POST', { studentEmail: currentUser.email, lessonTitle: title, score: '5' }); 
+                updateStatsUI(d.user); loadStudentGrades(); 
+            } else { 
+                btn.style.background = '#ef4444'; btn.style.color = 'white'; alert('Неверно!'); 
+                buttons.forEach(b => { if(b.innerText === corr) { b.style.background = '#10b981'; b.style.color = 'white'; } }); 
+            }
         }
-        async function submitHW(id, title) { const text = document.getElementById(`hw-${id}`).value.trim(); if (!text) return alert('Пусто!'); const t = document.getElementById('teacherSelect').value.split('|'); await api('/api/hw/submit', 'POST', { studentEmail: currentUser.email, studentName: currentUser.name, lessonTitle: title, text, teacherName: t[0], teacherEmail: t[1] }); alert('Отправлено!'); document.getElementById(`hw-${id}`).value = ''; loadStudentHW(); }
-        async function loadStudentHW() { const d = await api(`/api/hw/student/${currentUser.email}`); document.getElementById('studentHWStatus').innerHTML = d.length === 0 ? '<p>Нет ДЗ</p>' : d.map(h => `<div><b>${h.lessonTitle}</b>: ${h.status} ${h.grade ? `(Оценка: ${h.grade})` : ''}</div>`).join(''); }
-        async function buyItem(title, price) { const d = await api('/api/shop/buy', 'POST', { email: currentUser.email, itemTitle: title, price }); alert(d.message); if (d.success) document.getElementById('userCoins').innerText = d.coins; }
-        async function loadStudentGrades() { const g = await api(`/api/grades/${currentUser.email}`); document.getElementById('studentGrades').innerHTML = g.length === 0 ? '<p>Оценок нет</p>' : g.map(x => `<div>${x.lessonTitle}: <b>${x.score}</b></div>`).join(''); }
-        async function loadComments(id) { const c = await api(`/api/comments/${id}`); const box = document.getElementById(`chat-${id}`); if (box) box.innerHTML = c.length === 0 ? '<i>Нет вопросов</i>' : c.map(x => `<div class="comment-item"><b>${x.userName}</b>: ${x.text}</div>`).join(''); }
-        async function sendComment(id) { const input = document.getElementById(`msg-${id}`); const text = input.value.trim(); if (!text) return; await api('/api/comments/add', 'POST', { lessonId: id, userName: currentUser.name, text }); input.value = ''; loadComments(id); }
-        async function bookLesson() { const t = document.getElementById('teacherSelect').value.split('|'); await api('/api/appointments/book', 'POST', { studentEmail: currentUser.email, teacherName: t[0], teacher_email: t[1], lesson_time: document.getElementById('timeSelect').value }); alert('Записаны!'); }
-        function showAdmin(role) { document.getElementById('adminScreen').classList.remove('hidden'); if(role==='teacher') ['uploadBlock','teacherRegBlock','ordersBlock'].forEach(id => document.getElementById(id).classList.add('hidden')); loadAdminDashboard(); }
+
+        async function submitHW(id, title) { 
+            const text = document.getElementById(`hw-${id}`).value.trim(); if (!text) return alert('Пусто!'); 
+            const t = document.getElementById('teacherSelect').value.split('|'); 
+            await api('/api/hw/submit', 'POST', { studentEmail: currentUser.email, studentName: currentUser.name, lessonTitle: title, text, teacherName: t[0], teacherEmail: t[1] }); 
+            alert('Отправлено!'); document.getElementById(`hw-${id}`).value = ''; loadStudentHW(); 
+        }
+
+        async function loadStudentHW() { 
+            const d = await api(`/api/hw/student/${currentUser.email}`); 
+            document.getElementById('studentHWStatus').innerHTML = d.length === 0 ? '<p>Нет ДЗ</p>' : d.map(h => `<div><b>${h.lessonTitle}</b>: ${h.status} ${h.grade ? `(Оценка: ${h.grade})` : ''}</div>`).join(''); 
+        }
+
+        async function buyItem(title, price) { 
+            const d = await api('/api/shop/buy', 'POST', { email: currentUser.email, itemTitle: title, price }); 
+            alert(d.message); if (d.success) document.getElementById('userCoins').innerText = d.coins; 
+        }
+
+        async function loadStudentGrades() { 
+            const g = await api(`/api/grades/${currentUser.email}`); 
+            document.getElementById('studentGrades').innerHTML = g.length === 0 ? '<p>Оценок нет</p>' : g.map(x => `<div>${x.lessonTitle}: <b>${x.score}</b></div>`).join(''); 
+        }
+
+        async function loadComments(id) { 
+            const c = await api(`/api/comments/${id}`); const box = document.getElementById(`chat-${id}`); 
+            if (box) box.innerHTML = c.length === 0 ? '<i>Нет вопросов</i>' : c.map(x => `<div class="comment-item"><b>${x.userName}</b>: ${x.text}</div>`).join(''); 
+        }
+
+        async function sendComment(id) { 
+            const input = document.getElementById(`msg-${id}`); const text = input.value.trim(); if (!text) return; 
+            await api('/api/comments/add', 'POST', { lessonId: id, userName: currentUser.name, text }); input.value = ''; loadComments(id); 
+        }
+
+        async function bookLesson() { 
+            const t = document.getElementById('teacherSelect').value.split('|'); 
+            await api('/api/appointments/book', 'POST', { studentEmail: currentUser.email, teacherName: t[0], teacher_email: t[1], lesson_time: document.getElementById('timeSelect').value }); 
+            alert('Записаны!'); 
+        }
+
+        function showAdmin(role) { 
+            document.getElementById('adminScreen').classList.remove('hidden'); 
+            if(role==='teacher') ['uploadBlock','teacherRegBlock','ordersBlock'].forEach(id => document.getElementById(id).classList.add('hidden')); 
+            loadAdminDashboard(); 
+        }
+
         async function loadAdminDashboard() {
             const d = await api(`/api/dashboard/${currentUser.role}/${currentUser.email}`);
             document.getElementById('adminStudents').innerHTML = d.students.map(s => `<div class="admin-box"><b>${s.name}</b> (${s.class} кл) | 🪙${s.coins}</div>`).join('') || 'Нет';
-            document.getElementById('adminTeachers').innerHTML = d.teachers.map(t => `<div class="admin-box"><b>${t.name}</b></div>`).join('') || 'Нет';
+                        document.getElementById('adminTeachers').innerHTML = d.teachers.map(t => `<div class="admin-box"><b>${t.name}</b></div>`).join('') || 'Нет';
             document.getElementById('adminApps').innerHTML = d.appointments.map(a => `<div class="admin-box"><b>${a.studentEmail}</b> к ${a.teacherName}</div>`).join('') || 'Нет';
             document.getElementById('adminGradesList').innerHTML = d.grades.map(g => `<div>${g.studentEmail}: <b>${g.score}</b> за ${g.lesson_title}</div>`).join('') || 'Пуст';
             if (document.getElementById('adminOrdersList')) document.getElementById('adminOrdersList').innerHTML = d.orders.map(o => `<div>${o.email} -> ${o.itemTitle}</div>`).join('') || 'Пуст';
-            document.getElementById('adminHWList').innerHTML = d.homeworks.length === 0 ? '<p>Нет</p>' : d.homeworks.map(h => `<div class="card"><b>${h.studentName}</b>: ${h.homeworks || h.lessonTitle}<br><i>"${h.text}"</i>${h.status==='Проверено'?'<p>Проверено</p>':`<br><select id="g-${h.id}"><option value="5">5</option><option value="4">4</option></select><input type="text" id="r-${h.id}" placeholder="Отзыв"><button onclick="reviewHW('${h.id}')">Оценить</button>`}</div>`).join('');
+            document.getElementById('adminHWList').innerHTML = d.homeworks.length === 0 ? '<p>Нет</p>' : d.homeworks.map(h => `<div class="card"><b>${h.studentName}</b>: ${h.lessonTitle}<br><i>"${h.text}"</i>${h.status==='Проверено'?'<p>Проверено</p>':`<br><select id="g-${h.id}"><option value="5">5</option><option value="4">4</option></select><input type="text" id="r-${h.id}" placeholder="Отзыв"><button onclick="reviewHW('${h.id}')">Оценить</button>`}</div>`).join('');
         }
-        async function reviewHW(id) { const grade = document.getElementById(`g-${id}`).value, review = document.getElementById(`r-${id}`).value; await api('/api/hw/review', 'POST', { id, grade, review }); alert('Оценено!'); loadAdminDashboard(); }
-        async function uploadMaterial() { const schoolClass = document.getElementById('matClass').value, title = document.getElementById('matTitle').value, content = document.getElementById('matContent').value, videoUrl = document.getElementById('matVideo').value, testQuestion = document.getElementById('matQuestion').value, testAnswer = document.getElementById('matAnswer').value; await api('/api/admin/upload', 'POST', { schoolClass, title, content, videoUrl, testQuestion, testAnswer }); alert('Опубликовано!'); ['matTitle', 'matContent', 'matVideo', 'matQuestion', 'matAnswer'].forEach(id => document.getElementById(id).value = ''); loadAdminDashboard(); }
+
+        async function reviewHW(id) { 
+            const grade = document.getElementById(`g-${id}`).value, review = document.getElementById(`r-${id}`).value; 
+            await api('/api/hw/review', 'POST', { id, grade, review }); alert('Оценено!'); loadAdminDashboard(); 
+        }
+
+        async function uploadMaterial() { 
+            const schoolClass = document.getElementById('matClass').value, title = document.getElementById('matTitle').value, content = document.getElementById('matContent').value, videoUrl = document.getElementById('matVideo').value, testQuestion = document.getElementById('matQuestion').value, testAnswer = document.getElementById('matAnswer').value; 
+            await api('/api/admin/upload', 'POST', { schoolClass, title, content, videoUrl, testQuestion, testAnswer }); alert('Опубликовано!'); 
+            ['matTitle', 'matContent', 'matVideo', 'matQuestion', 'matAnswer'].forEach(id => document.getElementById(id).value = ''); loadAdminDashboard(); 
+        }
     </script>
 </body>
 </html>
