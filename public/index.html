@@ -84,9 +84,12 @@
         <div style="margin-bottom:15px;"><a href="/board.html" style="display:block; text-decoration:none; background:#4f46e5; color:white; padding:10px; border-radius:8px; text-align:center; font-weight:bold;">🎨 Открыть Онлайн-Доску</a></div>
         <div id="uploadBlock" class="card" style="background:#eff6ff;">
             <h3>➕ Создать интерактивный урок</h3>
-            <div style="background:white; padding:10px; border:1px dashed var(--warning); margin-bottom:10px;">
-                <input type="text" id="aiTopic" placeholder="Тема для AI..."><button onclick="generateAITest()" style="background:var(--warning); margin-top:5px;">🤖 Сгенерировать квиз через AI</button>
-            </div>
+           <div style="background:white; padding:15px; border:2px dashed var(--warning); margin-bottom:15px; text-align:center;">
+    <h4>🧠 НЕЙРОКОНСТРУКТОР ЭКЗАМЕНОВ</h4>
+    <p style="font-size:0.9rem; color:var(--text-muted);">ИИ может составить полноценный комплексный тест из нескольких вопросов с вариантами ответов.</p>
+    <a href="/quiz-generator.html" style="display:inline-block; text-decoration:none; background:var(--warning); color:#0f172a; padding:10px 20px; border-radius:8px; font-weight:bold;">🤖 Открыть ИИ-Генератор Полных Тестов</a>
+</div>
+
             <div class="grid">
                 <div><select id="matClass"><option value="5">5 класс</option><option value="9">9 класс</option><option value="11">11 класс</option></select><input type="text" id="matTitle" placeholder="Тема"><textarea id="matContent" placeholder="Текст лекции..."></textarea></div>
                 <div><input type="text" id="matVideo" placeholder="YouTube ссылка"><input type="text" id="matQuestion" placeholder="Вопрос"><input type="text" id="matAnswer" placeholder="Ответ (через черту А|Б|В|Г)"></div>
