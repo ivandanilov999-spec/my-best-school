@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 Метавселенная Достижений</title>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 0; background: #0b0f19; color: white; text-align: center; }
+        header { background: linear-gradient(135deg, #ea580c, #7c3aed); padding: 2rem; box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1rem; }
+        .leaderboard { background: #111827; border-radius: 20px; padding: 25px; border: 1px solid #1e293b; margin-bottom: 2rem; }
+        .leader-row { display: flex; justify-content: space-between; padding: 12px 20px; border-bottom: 1px solid #1e293b; align-items: center; }
+        .leader-row:last-child { border: none; }
+        .leader-row.top { background: rgba(234, 88, 12, 0.1); border-radius: 10px; font-weight: bold; color: #f97316; }
+        .badge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 1.5rem; }
+        .badge-card { background: #1f2937; padding: 25px; border-radius: 20px; border: 2px solid #374151; transition: 0.3s; position: relative; overflow: hidden; }
+        .badge-card:hover { transform: translateY(-5px) rotate(1deg); box-shadow: 0 0 25px rgba(124, 58, 237, 0.4); border-color: #7c3aed; }
+        .badge-icon { font-size: 3rem; margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); }
+        .back-btn { display: inline-block; background: #1f2937; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-bottom: 15px; border: 1px solid #374151; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="margin:0;">🏆 МЕТАВСЕЛЕННАЯ ДОСТИЖЕНИЙ</h1>
+        <p style="color: #cbd5e1;">Глобальный лидерборд и неоновые артефакты славы</p>
+    </header>
+
+    <div class="container">
+        <a href="/" class="back-btn">← Вернуться в школу</a>
+
+        <!-- ЗАЛ СЛАВЫ (ЛИДЕРБОРД) -->
+        <div class="leaderboard">
+            <h2>👥 Глобальный Рейтинг Учеников (Топ-3)</h2>
+            <div class="leader-row top"><span>🥇 1. Александр Петров</span><span>Лидер школы</span><span>Уровень 14 (3400 XP)</span></div>
+            <div class="leader-row" style="color:#cbd5e1;"><span>🥈 2. Мария Сидорова</span><span>Ученик</span><span>Уровень 11 (2100 XP)</span></div>
+            <div class="leader-row" style="color:#94a3b8;"><span>🥉 3. Иван Данилов</span><span>Ученик</span><span>Уровень 9 (1850 XP)</span></div>
+        </div>
+
+        <!-- НЕОНОВЫЕ БЕЙДЖИ -->
+        <h2>🎖️ Разблокируемые Легендарные Трофеи</h2>
+        <div class="badge-grid">
+            <div class="badge-card">
+                <div class="badge-icon">👑</div>
+                <h3>Основатель</h3>
+                <p style="color:#94a3b8; font-size:0.85rem;">Выдается за создание личного пространства в школе.</p>
+            </div>
+            <div class="badge-card">
+                <div class="badge-icon">🧠</div>
+                <h3>Супер Интеллект</h3>
+                <p style="color:#94a3b8; font-size:0.85rem;">Пройти 5 тестов подряд без единой ошибки.</p>
+            </div>
+            <div class="badge-card">
+                <div class="badge-icon">🏆</div>
+                <h3>Перфекционист</h3>
+                <p style="color:#94a3b8; font-size:0.85rem;">Сдать развернутое ДЗ учителю на оценку "5".</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
 
