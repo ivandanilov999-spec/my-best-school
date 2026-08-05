@@ -1,1 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 Интеллектуальный ИИ-Хаб обучения</title>
+    <style>
+        :root { --primary: #3b82f6; --neon: #06b6d4; --dark: #0f172a; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; background: #090d16; color: #f8fafc; }
+        header { background: linear-gradient(135deg, #1e1b4b, var(--dark)); padding: 2rem; text-align: center; border-bottom: 1px solid #1e293b; }
+        .container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
+        .layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 30px; }
+        @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+        .card { background: #111827; border: 1px solid #1e293b; padding: 25px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h2, h3 { color: var(--neon); margin-top: 0; }
+        
+        /* Стили Дерева Навыков */
+        .skill-tree { display: flex; flex-direction: column; align-items: center; gap: 20px; position: relative; margin-top: 2rem; }
+        .skill-node { background: #1f2937; border: 2px solid #374151; padding: 15px; border-radius: 50%; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; position: relative; cursor: pointer; transition: 0.3s; }
+        .skill-node.unlocked { border-color: var(--neon); box-shadow: 0 0 15px var(--neon); background: #1e1b4b; }
+        .skill-node span { position: absolute; bottom: -25px; font-size: 0.8rem; width: 120px; text-align: center; color: #94a3b8; }
+        .skill-line { width: 4px; height: 30px; background: #374151; }
+        .skill-line.active { background: var(--neon); box-shadow: 0 0 8px var(--neon); }
+
+        /* AI Чат */
+        .ai-chat { display: flex; flex-direction: column; height: 350px; background: #030712; border-radius: 12px; border: 1px solid #1e293b; padding: 15px; overflow-y: auto; }
+        .msg { margin-bottom: 12px; padding: 10px 14px; border-radius: 12px; max-width: 80%; font-size: 0.95rem; }
+        .msg.user { background: var(--primary); align-self: flex-end; color: white; }
+        .msg.ai { background: #1f2937; align-self: flex-start; border-left: 4px solid var(--neon); }
+        
+        input, button { padding: 12px; border-radius: 8px; border: 1px solid #1e293b; font-size: 1rem; box-sizing: border-box; }
+        input { background: #1f2937; color: white; width: 75%; }
+        button { background: var(--primary); color: white; width: 22%; font-weight: bold; cursor: pointer; }
+        button:hover { background: #2563eb; }
+        .back-btn { display: inline-block; background: #1f2937; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-bottom: 15px; border: 1px solid #374151; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="margin:0; font-size: 2.2rem; letter-spacing: -0.5px;">🧠 КВАНТОВЫЙ AI-ХАБ КУРАТОРСТВА</h1>
+        <p style="color: #94a3b8; margin: 5px 0 0 0;">Индивидуальная траектория развития на базе ИИ</p>
+    </header>
+
+    <div class="container">
+        <a href="/" class="back-btn">← Вернуться на главный портал</a>
+        
+        <div class="layout">
+            <!-- ДЕРЕВО НАВЫКОВ (RPG-Style) -->
+            <div class="card">
+                <h2>🗺️ Ваша Карта Навыков (Skill Tree)</h2>
+                <p style="color:#94a3b8; font-size:0.9rem;">Зарабатывайте XP на тестах и уроках, чтобы разблокировать новые Квантовые Уровни знаний.</p>
+                
+                <div class="skill-tree">
+                    <div class="skill-node unlocked">🚀<span>Базовый Уровень (1 LVL)</span></div>
+                    <div class="skill-line active"></div>
+                    <div class="skill-node unlocked">🔬<span>Исследователь (2 LVL)</span></div>
+                    <div class="skill-line active"></div>
+                    <div class="skill-node unlocked">⚡<span>Аналитик Данных (3 LVL)</span></div>
+                    <div class="skill-line"></div>
+                    <div class="skill-node">🤖<span>Мастер AI-Систем (4 LVL)</span></div>
+                </div>
+            </div>
+
+            <!-- ГИПЕР-ИНТЕЛЛЕКТУАЛЬНЫЙ АССИСТЕНТ -->
+            <div class="card" style="display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <h2>🤖 Персональный AI-Нейрокуратор</h2>
+                    <p style="color:#94a3b8; font-size:0.9rem;">Задайте любой сложный вопрос по физике, математике или программированию. ИИ переведет его на простой язык.</p>
+                    <div class="ai-chat" id="aiChat">
+                        <div class="msg ai">Привет! Я твой персональный ИИ-тьютор. Выдели сложный термин из урока или напиши свой вопрос, и я разложу его по полочкам с примерами из жизни! 😊</div>
+                    </div>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-top:15px;">
+                    <input type="text" id="aiQuestion" placeholder="Например: Объясни квантовую запутанность на котиках...">
+                    <button onclick="askAI()">Спросить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function askAI() {
+            const input = document.getElementById('aiQuestion');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const chat = document.getElementById('aiChat');
+            
+            // Сообщение пользователя
+            chat.innerHTML += `<div class="msg user">${text}</div>`;
+            input.value = '';
+            chat.scrollTop = chat.scrollHeight;
+
+            // Ответ ИИ через симуляцию глубокого анализа
+            setTimeout(() => {
+                let aiResponse = `Я проанализировал твой запрос по теме "${text}". Простыми словами: представь, что это как пицца. Если разделить её на кусочки, суть не изменится, но усваивать информацию станет намного легче! Для закрепления рекомендую пройти интерактивный тест в Личном Кабинете.`;
+                chat.innerHTML += `<div class="msg ai">🤖 <b>Анализ ИИ:</b> ${aiResponse}</div>`;
+                chat.scrollTop = chat.scrollHeight;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
 
