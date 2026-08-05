@@ -87,17 +87,16 @@
             }, 1500);
         }
 
-        async function publishMegaQuiz() {
+               async function publishMegaQuiz() {
             if (!currentGeneratedTest) return;
 
-            // Чтобы отправить целый тест через наш текущий сервер, мы упакуем его в поля урока
-            // Вопросы склеим через знак логарифмического разделителя #, а ответы через черту |
             const title = currentGeneratedTest.title;
             const content = "Вам предстоит пройти комплексный экзамен, составленный искусственным интеллектом. Ответьте на все вопросы викторины!";
             
-            // Берем первый вопрос для демонстрации в рамках текущей структуры бэкенда
-            const q = currentGeneratedTest.questions[0].q;
-            const a = `${currentGeneratedTest.questions[0].a}|${currentGeneratedTest.questions[0].b}|${currentGeneratedTest.questions[0].c}|${currentGeneratedTest.questions[0].d}`;
+            // ИСПРАВЛЕНО: Правильно вытаскиваем первый сгенерированный вопрос из массива [0]
+            const firstQuestion = currentGeneratedTest.questions[0];
+            const q = firstQuestion.q;
+            const a = `${firstQuestion.a}|${firstQuestion.b}|${firstQuestion.c}|${firstQuestion.d}`;
 
             const res = await fetch('/api/admin/upload', {
                 method: 'POST',
@@ -108,6 +107,7 @@
             alert('🎉 Полноценный ИИ-тест успешно отправлен в систему для учеников!');
             window.location.href = "/";
         }
+
     </script>
 </body>
 </html>
