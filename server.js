@@ -38,16 +38,23 @@ app.post('/api/register', (req, res) => {
 });
 
 // AI ГЕНЕРАТОР ТЕСТОВ (Симуляция умной генерации по ключевым словам темы)
-app.post('/api/ai/generate-test', (req, { res }) => {
+// ИСПРАВЛЕННЫЙ РАБОЧИЙ ВАРИАНТ:
+app.post('/api/ai/generate-test', (req, res) => {
     const { topic } = req.body;
-    // Алгоритм создает интерактивный тест на основе темы лекции
+    if (!topic) return res.status(400).json({ success: false });
+
+    // Список умных вопросов, которые ИИ подставляет под вашу тему
     const mockQuestions = [
-        { q: `Что является главным определением в теме "${topic}"?`, a: "базис" },
-        { q: `Какая формула лучше всего описывает процессы в "${topic}"?`, a: "х=у" }
+        { q: `Что является фундаментальной основой в теме "${topic}"?`, a: "базис" },
+        { q: `Какой главный закон или правило регулирует процессы в "${topic}"?`, a: "аксиома" },
+        { q: `Какое практическое применение имеет "${topic}" в реальной жизни?`, a: "практика" }
     ];
+
+    // Выбираем случайный вариант из базы ИИ
     const random = mockQuestions[Math.floor(Math.random() * mockQuestions.length)];
     res.json({ success: true, question: random.q, answer: random.a });
 });
+
 
 // ПУБЛИКАЦИЯ МАТЕРИАЛОВ
 app.post('/api/admin/upload', (req, res) => {
