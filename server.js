@@ -11,17 +11,15 @@ const readData = (file, def = []) => {
 };
 const writeData = (file, data) => fs.writeFileSync(file, JSON.stringify(data, null, 2), 'utf8');
 
-// Инициализация базы данных и дефолтного админа
 let users = readData('users.json', {});
 if (!users['admin@school.com']) {
     users['admin@school.com'] = { password: 'admin777', name: 'Директор', role: 'admin', class: 'all', coins: 1000, xp: 0, level: 1, badges: ['👑 Основатель'] };
     writeData('users.json', users);
 }
 
-app.use(bodyParser.json({ limit: '10mb' })); // Увеличиваем лимит для сохранения рисунков с доски
+app.use(bodyParser.json({ limit: '10mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Авторизация с подгрузкой геймификации
 app.post('/api/login', (req, res) => {
     const { email, password } = req.body; users = readData('users.json', {});
     const u = users[email];
@@ -29,45 +27,28 @@ app.post('/api/login', (req, res) => {
     res.json({ success: true, role: u.role, user: { email, name: u.name, class: u.class, coins: u.coins || 0, xp: u.xp || 0, level: u.level || 1, badges: u.badges || [] } });
 });
 
-// Регистрация с начальными игровыми параметрами
 app.post('/api/register', (req, res) => {
     const { email, password, name, schoolClass, role } = req.body; users = readData('users.json', {});
     if (users[email]) return res.status(400).json({ success: false, message: 'Email занят' });
     users[email] = { password, name, role: role || 'student', class: schoolClass, coins: 0, xp: 0, level: 1, badges: ['🎒 Новичок'] };
-    writeData('users.json', users); res.json({ success: true, message: 'Успешно зарегистрировано!' });
+    writeData('users.json', users); res.json({ success: true, message: 'Успешно!' });
 });
 
-// AI ГЕНЕРАТОР ТЕСТОВ (Симуляция умной генерации по ключевым словам темы)
-// ИСПРАВЛЕННЫЙ РАБОЧИЙ ВАРИАНТ:
-app.post('/api/ai/generate-test', (req, res) => {
-    const { topic } = req.body;
-    if (!topic) return res.status(400).json({ success: false });
-
-    // Список умных вопросов, которые ИИ подставляет под вашу тему
-    const mockQuestions = [
-        { q: `Что является фундаментальной основой в теме "${topic}"?`, a: "базис" },
-        { q: `Какой главный закон или правило регулирует процессы в "${topic}"?`, a: "аксиома" },
-        { q: `Какое практическое применение имеет "${topic}" в реальной жизни?`, a: "практика" }
-    ];
-
-    // Выбираем случайный вариант из базы ИИ
-    const random = mockQuestions[Math.floor(Math.random() * mockQuestions.length)];
-    res.json({ success: true, question: random.q, answer: random.a });
-});
-
-
-// ПУБЛИКАЦИЯ МАТЕРИАЛОВ
 app.post('/api/admin/upload', (req, res) => {
     const materials = readData('materials.json');
     materials.push({ id: String(Date.now()), ...req.body });
-    writeData('materials.json', materials); res.json({ success: true, message: 'Урок сгенерирован и опубликован!' });
+    writeData('materials.json', materials); res.json({ success: true, message: 'Урок создан!' });
 });
 
 app.get('/api/materials/:class', (req, res) => {
     res.json(readData('materials.json').filter(m => m.class === req.params.class));
 });
 
-// ГЕЙМИФИКАЦИЯ: ПРОВЕРКА ТЕСТА, НАЧИСЛЕНИЕ XP И LEVEL UP
+app.post('/api/appointments/book', (req, res) => {
+    const appData = readData('appointments.json'); appData.push(req.body);
+    writeData('appointments.json', appData); res.json({ success: true, message: 'Запись создана!' });
+});
+
 app.post('/api/grades/save', (req, res) => {
     const { studentEmail, lessonTitle } = req.body;
     const grades = readData('grades.json'); users = readData('users.json', {});
@@ -75,15 +56,9 @@ app.post('/api/grades/save', (req, res) => {
     
     if (users[studentEmail]) {
         let u = users[studentEmail];
-        u.coins = (u.coins || 0) + 15; // +15 монет
-        u.xp = (u.xp || 0) + 50;       // +50 опыта
-        
-        // Расчет Level Up (каждый уровень требует на 100 XP больше)
-        let nextLevelXp = u.level * 100;
-        if (u.xp >= nextLevelXp) {
-            u.level += 1;
-            if (!u.badges.includes('🧠 Отличник')) u.badges.push('🧠 Отличник');
-        }
+        u.coins = (u.coins || 0) + 15;
+        u.xp = (u.xp || 0) + 50;
+        if (u.xp >= u.level * 100) { u.level += 1; if (!u.badges.includes('🧠 Отличник')) u.badges.push('🧠 Отличник'); }
     }
     writeData('grades.json', grades); writeData('users.json', users);
     res.json({ success: true, user: users[studentEmail] });
@@ -91,21 +66,11 @@ app.post('/api/grades/save', (req, res) => {
 
 app.get('/api/grades/:email', (req, res) => res.json(readData('grades.json').filter(g => g.studentEmail === req.params.email)));
 
-// СОВМЕСТНАЯ ДОСКА (СОХРАНЕНИЕ И ЗАГРУЗКА РИСУНКА ИЗ ОБЛАКА)
-app.post('/api/board/save', (req, res) => {
-    const { boardData } = req.body;
-    writeData('board.json', { image: boardData });
-    res.json({ success: true });
-});
-app.get('/api/board/load', (req, res) => {
-    res.json(readData('board.json', { image: '' }));
-});
-
-// ДОМАШНИЕ ЗАДАНИЯ И МАГАЗИН
 app.post('/api/hw/submit', (req, res) => {
     const hw = readData('hw.json'); hw.push({ id: String(Date.now()), ...req.body, status: 'На проверке', grade: '', review: '' });
     writeData('hw.json', hw); res.json({ success: true, message: 'ДЗ отправлено!' });
 });
+
 app.get('/api/hw/student/:email', (req, res) => res.json(readData('hw.json').filter(h => h.studentEmail === req.params.email)));
 
 app.post('/api/hw/review', (req, res) => {
@@ -115,10 +80,7 @@ app.post('/api/hw/review', (req, res) => {
         item.status = 'Проверено'; item.grade = grade; item.review = review;
         if (users[item.studentEmail]) {
             users[item.studentEmail].xp = (users[item.studentEmail].xp || 0) + 100;
-            if (grade === '5') {
-                users[item.studentEmail].coins = (users[item.studentEmail].coins || 0) + 30;
-                if (!users[item.studentEmail].badges.includes('🏆 Перфекционист')) users[item.studentEmail].badges.push('🏆 Перфекционист');
-            }
+            if (grade === '5') { users[item.studentEmail].coins = (users[item.studentEmail].coins || 0) + 30; }
         }
         writeData('hw.json', hw); writeData('users.json', users);
     }
@@ -131,23 +93,28 @@ app.post('/api/shop/buy', (req, res) => {
     users[email].coins -= price;
     const orders = readData('orders.json'); orders.push({ email, itemTitle, date: new Date().toLocaleDateString() });
     writeData('users.json', users); writeData('orders.json', orders);
-    res.json({ success: true, message: 'Покупка доставлена!', coins: users[email].coins });
+    res.json({ success: true, message: 'Покупка успешна!', coins: users[email].coins });
 });
 
-// РАСШИРЕННЫЙ ДАШБОРД ДЛЯ АНАЛИТИКИ
 app.get('/api/dashboard/:role/:email', (req, res) => {
     users = readData('users.json', {});
     const { role, email } = req.params;
     const uList = Object.keys(users).map(e => ({ email: e, ...users[e] }));
-    
+    const appointments = readData('appointments.json');
+    const hw = readData('hw.json');
     res.json({
         students: uList.filter(u => u.role === 'student'),
         teachers: uList.filter(u => u.role === 'teacher'),
-        appointments: readData('appointments.json'),
-        homeworks: role === 'admin' ? readData('hw.json') : readData('hw.json').filter(h => h.teacherEmail === email),
+        appointments: role === 'admin' ? appointments : appointments.filter(a => a.teacher_email === email),
+        homeworks: role === 'admin' ? hw : hw.filter(h => h.teacherEmail === email),
         grades: readData('grades.json'),
         orders: readData('orders.json')
     });
+});
+
+app.post('/api/ai/generate-test', (req, res) => {
+    const { topic } = req.body;
+    res.json({ success: true, q: `Главный закон в теме "${topic}":`, a: "Базис науки", b: "Теория хаоса", c: "Случайный подбор", d: "Нулевой баланс" });
 });
 
 app.post('/api/comments/add', (req, res) => {
@@ -156,5 +123,6 @@ app.post('/api/comments/add', (req, res) => {
 });
 app.get('/api/comments/:lessonId', (req, res) => res.json(readData('comments.json').filter(c => String(c.lessonId) === String(req.params.lessonId))));
 
-app.listen(PORT, () => console.log('Академия Будущего запущена!'));
+app.listen(PORT, () => console.log('Академия активна!'));
+
 
